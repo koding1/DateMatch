@@ -76,7 +76,7 @@ function ThirdScreen({ navigation }) {
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-              name ? navigation.navigate("Start") : console.log("빈칸");
+              name ? navigation.navigate("Fourth") : console.log("빈칸");
             }}
           >
             <LinearGradient
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
   },
 
   nameInputView: {
+    marginTop: "20%",
     marginBottom: 20,
     justifyContent: "center",
     width: styles_width,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
   nextButton: {
     width: "100%",
     alignItems: "center",
-    marginBottom: 60,
+    marginBottom: 50,
   },
   nextButtonText: {
     textAlign: "center",

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   startButton: {
-    marginBottom: 60,
+    marginBottom: 50,
   },
   startButtonText: {
     textAlign: "center",

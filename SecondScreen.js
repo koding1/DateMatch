@@ -78,7 +78,7 @@ function SecondScreen({ navigation }) {
             style={styles.nextButton}
             onPress={() => {
               phoneNumber ?
-              navigation.navigate("Start") :
+              navigation.navigate("Third") :
               console.log("빈칸")
             }}
           >

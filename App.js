@@ -15,6 +15,7 @@ import StartScreen from "./StartScreen";
 import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
 import NameInputScreen from "./NameInputScreen";
 import BirthInputScreen from "./BirthInputScreen";
+import GenderInputScreen from "./GenderInputScreen";
 
 const Stack = createStackNavigator();
 

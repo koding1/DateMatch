@@ -7,4 +7,5 @@ export const theme = {
     progressComponentBg: 'rgb(230, 230, 230)',
     progressColor: 'tomato',
     subTextColor: 'rgb(86,91,97)',
+    notChoiceBorderColor: 'rgb(200,200,200)',
 }

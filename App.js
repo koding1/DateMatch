@@ -12,9 +12,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import StartScreen from "./StartScreen";
-import SecondScreen from "./SecondScreen";
-import ThirdScreen from "./ThirdScreen";
-import FourthScreen from "./FourthScreen";
+import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
+import NameInputScreen from "./NameInputScreen";
+import BirthInputScreen from "./BirthInputScreen";
 
 const Stack = createStackNavigator();
 
@@ -27,13 +27,13 @@ export default function App() {
       >
         <Stack.Screen name="Start" component={StartScreen} />
 
-        <Stack.Screen name="Second" component={SecondScreen} />
+        <Stack.Screen name="PhoneNumberInputScreen" component={PhoneNumberInputScreen} />
 
-        <Stack.Screen name="Third" component={ThirdScreen} />
+        <Stack.Screen name="NameInputScreen" component={NameInputScreen} />
 
-        <Stack.Screen name="Fourth" component={FourthScreen} />
+        <Stack.Screen name="BirthInputScreen" component={BirthInputScreen} />
         
-
+        <Stack.Screen name="GenderInputScreen" component={GenderInputScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

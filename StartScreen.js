@@ -10,6 +10,9 @@ import { theme } from "./colors";
 import {LinearGradient} from 'expo-linear-gradient';
 
 function StartScreen({ navigation }) {
+  const previousScreen = null
+  const nextScreen = 'PhoneNumberInputScreen'
+
   return (
     <ImageBackground
       source={require("./image/bg.jpg")}
@@ -20,7 +23,7 @@ function StartScreen({ navigation }) {
         <TouchableOpacity
           style={styles.startButton}
           onPress={() => {
-            navigation.navigate("Second");
+            navigation.navigate(nextScreen);
           }}
         >
           <LinearGradient

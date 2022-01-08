@@ -12,7 +12,10 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function FourthScreen({ navigation }) {
+function BirthInputScreen({ navigation }) {
+  const previousScreen = 'NameInputScreen'
+  const nextScreen = 'GenderInputScreen'
+
   const [yy, setYy] = useState();
   const [mm, setMm] = useState();
   const [dd, setDd] = useState();
@@ -47,7 +50,7 @@ function FourthScreen({ navigation }) {
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() => {
-            navigation.navigate("Third");
+            navigation.navigate(previousScreen);
           }}
         >
           <AntDesign name="left" size={40} color="grey" />
@@ -104,10 +107,10 @@ function FourthScreen({ navigation }) {
             onPress={() => {
                 if (yy && mm && dd) {
                     if (yy.length==4 && mm.length==2 && dd.length==2){
-                        navigation.navigate("Start")
+                      navigation.navigate(nextScreen);
                     }
                     else{
-                        console.log("입력 모자람");
+                      console.log("입력 모자람");
                     }
                 }
                 else{
@@ -204,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FourthScreen;
+export default BirthInputScreen;

@@ -12,7 +12,9 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import {LinearGradient} from 'expo-linear-gradient';
 
-function SecondScreen({ navigation }) {
+function PhoneNumberInputScreen({ navigation }) {
+  const previousScreen = 'Start'
+  const nextScreen = 'NameInputScreen'
   const [countryCallingCode, setCountryCallingCode] = useState("KR +82");
   const [countryCallingCodeFocus, setCountryCallingCodeFocus] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -32,7 +34,7 @@ function SecondScreen({ navigation }) {
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() => {
-            navigation.navigate("Start");
+            navigation.navigate(previousScreen);
           }}
         >
           <AntDesign name="left" size={40} color="grey" />
@@ -78,7 +80,7 @@ function SecondScreen({ navigation }) {
             style={styles.nextButton}
             onPress={() => {
               phoneNumber ?
-              navigation.navigate("Third") :
+              navigation.navigate(nextScreen) :
               console.log("빈칸")
             }}
           >
@@ -182,4 +184,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default SecondScreen;
+export default PhoneNumberInputScreen;

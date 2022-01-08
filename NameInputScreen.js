@@ -12,7 +12,10 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function ThirdScreen({ navigation }) {
+function NameInputScreen({ navigation }) {
+  const previousScreen = 'PhoneNumberInputScreen'
+  const nextScreen = 'BirthInputScreen'
+
   const [name, setName] = useState("");
   const [nameFocused, setNameFocused] = useState(false);
 
@@ -29,7 +32,7 @@ function ThirdScreen({ navigation }) {
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() => {
-            navigation.navigate("Second");
+            navigation.navigate(previousScreen);
           }}
         >
           <AntDesign name="left" size={40} color="grey" />
@@ -76,7 +79,7 @@ function ThirdScreen({ navigation }) {
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-              name ? navigation.navigate("Fourth") : console.log("빈칸");
+              name ? navigation.navigate(nextScreen) : console.log("빈칸");
             }}
           >
             <LinearGradient
@@ -168,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ThirdScreen;
+export default NameInputScreen;

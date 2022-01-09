@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   StatusBar,
+  SafeAreaView,
 } from "react-native";
 import { theme } from "./colors";
 import { AntDesign } from "@expo/vector-icons";
@@ -12,9 +13,9 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { borderColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
-function GenderInputScreen({ navigation }) {
+function GenderInputScreen({ navigation, progress }) {
   const previousScreen = "BirthInputScreen";
-  const nextScreen = "GenderInputScreen";
+  const nextScreen = "UniversityInputScreen";
 
   const [womanFocused, setWomanFocused] = useState(false);
   const [manFocused, setManFocused] = useState(false);
@@ -30,14 +31,14 @@ function GenderInputScreen({ navigation }) {
 
     setManFocused(!manFocused);
   }
-
+  const progressString = (progress*100).toString() + "%";
   return (
-    <View style={styles.main}>
+    <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>
 
       <View style={styles.header}>
         <View style={styles.progressComponent}>
-          <View style={styles.progress}></View>
+          <View style={{...styles.progress, width: progressString}}></View>
         </View>
 
         <TouchableOpacity
@@ -74,7 +75,7 @@ function GenderInputScreen({ navigation }) {
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-                (manFocused || womanFocused) ? console.log("성별이 선택 되었습니다.") : console.log("성별이 선택되지 않았습니다.")
+                (manFocused || womanFocused) ? navigation.navigate(nextScreen) : console.log("성별이 선택되지 않았습니다.")
             }}
           >
             <LinearGradient
@@ -88,7 +89,7 @@ function GenderInputScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -101,7 +102,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.progressComponentBg,
   },
   progress: {
-    width: "80%",
     height: 7,
     backgroundColor: theme.progressColor,
   },

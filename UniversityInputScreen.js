@@ -13,9 +13,9 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function NameInputScreen({ navigation, progress }) {
-  const previousScreen = 'PhoneNumberInputScreen'
-  const nextScreen = 'BirthInputScreen'
+function UniversityInputScreen({ navigation, progress }) {
+  const previousScreen = 'GenderInputScreen'
+  const nextScreen = 'CertificationScreen'
 
   const [name, setName] = useState("");
   const [nameFocused, setNameFocused] = useState(false);
@@ -23,7 +23,6 @@ function NameInputScreen({ navigation, progress }) {
   const onChangeNameText = (payload) => setName(payload);
 
   const progressString = (progress*100).toString() + "%";
-
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>
@@ -45,13 +44,13 @@ function NameInputScreen({ navigation, progress }) {
 
       <View style={{flex:0.9}}>
         <View style={styles.nameView}>
-          <Text style={styles.nameViewText}>내 이름:</Text>
+          <Text style={styles.nameViewText}>내 학교:</Text>
         </View>
 
         <View style={{alignItems: "center", flex:0.5 }}>
           <View style={styles.nameInputView}>
             <TextInput
-              placeholder="이름을 입력해주세요."
+              placeholder="학교 이름을 입력해주세요"
               value={name}
               onBlur={() => setNameFocused(false)}
               onFocus={() => setNameFocused(true)}
@@ -174,4 +173,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NameInputScreen;
+export default UniversityInputScreen;

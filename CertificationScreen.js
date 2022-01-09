@@ -5,7 +5,6 @@ import {
   View,
   TouchableOpacity,
   StatusBar,
-  TextInput,
   SafeAreaView,
 } from "react-native";
 import { theme } from "./colors";
@@ -13,17 +12,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function NameInputScreen({ navigation, progress }) {
-  const previousScreen = 'PhoneNumberInputScreen'
-  const nextScreen = 'BirthInputScreen'
+function CertificationScreen({ navigation, progress }) {
+  const previousScreen = 'GenderInputScreen'
+  const nextScreen = 'CertificationScreen'
 
-  const [name, setName] = useState("");
-  const [nameFocused, setNameFocused] = useState(false);
-
-  const onChangeNameText = (payload) => setName(payload);
+  const [confirmed, setConfirmed] = useState(true); // 서버에서 받아와야함
 
   const progressString = (progress*100).toString() + "%";
-
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>
@@ -45,45 +40,23 @@ function NameInputScreen({ navigation, progress }) {
 
       <View style={{flex:0.9}}>
         <View style={styles.nameView}>
-          <Text style={styles.nameViewText}>내 이름:</Text>
+          <Text style={styles.nameViewText}>본인 확인</Text>
         </View>
 
         <View style={{alignItems: "center", flex:0.5 }}>
-          <View style={styles.nameInputView}>
-            <TextInput
-              placeholder="이름을 입력해주세요."
-              value={name}
-              onBlur={() => setNameFocused(false)}
-              onFocus={() => setNameFocused(true)}
-              onChangeText={onChangeNameText}
-
-              style={
-                name
-                  ? {
-                      ...styles.nameInput,
-                      borderColor: nameFocused
-                        ? theme.progressColor
-                        : "black",
-                    }
-                  : {
-                      ...styles.placeholderStyle,
-                      borderColor: nameFocused
-                        ? theme.progressColor
-                        : "black",
-                    }
-              }
-            />
-
-          </View>
+          <Text style={styles.mainText}>본인 확인이 진행 중 입니다.</Text>
           <Text style={styles.subText}>
-            ~~ 프로필에 표시되는 이름으로, 이후 변경할 수 없습니다.
+            ~~은 이용자의 더욱 안전하고 쾌적한 매칭 환경 조성을 위해서, 본인 확인을 수작업으로 진행 후 가입을 승인하고 있습니다.
+          </Text>
+          <Text style={styles.subText}>
+            본인 확인은 약 0~2일 정도의 시간이 소요됩니다.
           </Text>
         </View>
         <View style={{flex:0.3,justifyContent: "flex-end",}}>
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-              name ? navigation.navigate(nextScreen) : console.log("빈칸");
+              confirmed ? navigation.navigate(nextScreen) : console.log("신원 확인이 완료되지 않았습니다.");
             }}
           >
             <LinearGradient
@@ -132,27 +105,18 @@ const styles = StyleSheet.create({
     marginLeft: 6,
   },
 
-  nameInputView: {
-    marginTop: "20%",
-    marginBottom: 20,
-    justifyContent: "center",
+
+
+  mainText: {
     width: styles_width,
-  },
-  nameInput: {
-    borderBottomWidth: 2,
     fontSize: 25,
-    color: theme.phoneNumberTextColor,
-  },
-  placeholderStyle: {
-    borderBottomWidth: 2,
-    fontSize: 25,
-    color: theme.phoneNumberTextColor,
   },
 
   subText: {
-    width: "83%",
+    width: styles_width,
     color: theme.subTextColor,
     fontSize: 13,
+    marginVertical: 5,
   },
 
   gradient: {
@@ -174,4 +138,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NameInputScreen;
+export default CertificationScreen;

@@ -6,13 +6,14 @@ import {
   TouchableOpacity,
   StatusBar,
   TextInput,
+  SafeAreaView,
 } from "react-native";
 import { theme } from "./colors";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function BirthInputScreen({ navigation }) {
+function BirthInputScreen({ navigation, progress }) {
   const previousScreen = 'NameInputScreen'
   const nextScreen = 'GenderInputScreen'
 
@@ -34,17 +35,22 @@ function BirthInputScreen({ navigation }) {
   };
   const ddChange = (payload) => {
     setDd(payload);
+    if (payload.length == 2) {
+      ref_input3.current.blur()
+  }
   };
   const ref_input2 = useRef();
   const ref_input3 = useRef();
 
+  const progressString = (progress*100).toString() + "%";
+
   return (
-    <View style={styles.main}>
+    <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>
 
       <View style={styles.header}>
         <View style={styles.progressComponent}>
-          <View style={styles.progress}></View>
+          <View style={{...styles.progress, width: progressString}}></View>
         </View>
 
         <TouchableOpacity
@@ -129,7 +135,7 @@ function BirthInputScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -142,7 +148,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.progressComponentBg,
   },
   progress: {
-    width: "60%",
     height: 7,
     backgroundColor: theme.progressColor,
   },

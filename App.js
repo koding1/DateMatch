@@ -16,10 +16,13 @@ import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
 import NameInputScreen from "./NameInputScreen";
 import BirthInputScreen from "./BirthInputScreen";
 import GenderInputScreen from "./GenderInputScreen";
+import UniversityInputScreen from "./UniversityInputScreen";
+import CertificationScreen from "./CertificationScreen";
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const SCREEN_NUM = 6
   return (
     <NavigationContainer style={styles.nav}>
       <Stack.Navigator
@@ -28,13 +31,18 @@ export default function App() {
       >
         <Stack.Screen name="Start" component={StartScreen} />
 
-        <Stack.Screen name="PhoneNumberInputScreen" component={PhoneNumberInputScreen} />
+        <Stack.Screen name={`PhoneNumberInputScreen`} children={({navigation})=><PhoneNumberInputScreen navigation={navigation} progress={1/SCREEN_NUM}/>}/>
 
-        <Stack.Screen name="NameInputScreen" component={NameInputScreen} />
+        <Stack.Screen name={`NameInputScreen`} children={({navigation})=><NameInputScreen navigation={navigation} progress={2/SCREEN_NUM}/>}/>
 
-        <Stack.Screen name="BirthInputScreen" component={BirthInputScreen} />
-        
-        <Stack.Screen name="GenderInputScreen" component={GenderInputScreen} />
+        <Stack.Screen name={`BirthInputScreen`} children={({navigation})=><BirthInputScreen navigation={navigation} progress={3/SCREEN_NUM}/>}/>
+
+        <Stack.Screen name={`GenderInputScreen`} children={({navigation})=><GenderInputScreen navigation={navigation} progress={4/SCREEN_NUM}/>}/>
+
+        <Stack.Screen name={`UniversityInputScreen`} children={({navigation})=><UniversityInputScreen navigation={navigation} progress={5/SCREEN_NUM}/>}/>
+
+        <Stack.Screen name={`CertificationScreen`} children={({navigation})=><CertificationScreen navigation={navigation} progress={6/SCREEN_NUM}/>}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );

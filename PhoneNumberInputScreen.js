@@ -6,13 +6,14 @@ import {
   TouchableOpacity,
   StatusBar,
   TextInput,
+  SafeAreaView,
 } from "react-native";
 import { theme } from "./colors";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import {LinearGradient} from 'expo-linear-gradient';
 
-function PhoneNumberInputScreen({ navigation }) {
+function PhoneNumberInputScreen({ navigation, progress }) {
   const previousScreen = 'Start'
   const nextScreen = 'NameInputScreen'
   const [countryCallingCode, setCountryCallingCode] = useState("KR +82");
@@ -22,13 +23,16 @@ function PhoneNumberInputScreen({ navigation }) {
 
   const onChangeCountryCallingCode = (payload) => setCountryCallingCode(payload);
   const onChangePhoneNumber = (payload) => setPhoneNumber(payload);
+
+  const progressString = (progress*100).toString() + "%";
   return (
-    <View style={styles.main}>
-      <StatusBar></StatusBar>
+    <SafeAreaView style={styles.main}>
+      <StatusBar>
+      </StatusBar>
 
       <View style={styles.header}>
         <View style={styles.progressComponent}>
-          <View style={styles.progress}></View>
+          <View style={{...styles.progress, width: progressString}}></View>
         </View>
 
         <TouchableOpacity
@@ -95,7 +99,7 @@ function PhoneNumberInputScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -110,7 +114,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.progressComponentBg,
   },
   progress: {
-    width: "20%",
     height: 7,
     backgroundColor: theme.progressColor,
   },

@@ -18,7 +18,7 @@ import BirthInputScreen from "./BirthInputScreen";
 import GenderInputScreen from "./GenderInputScreen";
 import UniversityInputScreen from "./UniversityInputScreen";
 import CertificationScreen from "./CertificationScreen";
-
+import firebase from '@react-native-firebase/storage'
 const Stack = createStackNavigator();
 
 export default function App() {

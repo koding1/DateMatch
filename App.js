@@ -170,4 +170,8 @@ const horizontalAnimation = {
   },
 };
 // test
+<<<<<<< HEAD
 // test
+=======
+// branch test
+>>>>>>> 0008a10393eff6a5389b2006ae47c3ae7339669c

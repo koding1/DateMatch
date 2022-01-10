@@ -26,7 +26,7 @@ function StartScreen({ navigation }) {
             ? navigation.navigate("MatchScreen")
             : navigation.navigate("CertificationScreen")
         } else {
-          console.log("No data available");
+          console.log("No data available !!!");
         }
       })
       .catch((error) => {

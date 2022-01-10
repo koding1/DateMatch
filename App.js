@@ -167,5 +167,5 @@ const horizontalAnimation = {
         ],
       },
     };
-  },
+  }, 
 };

@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -18,11 +18,23 @@ import BirthInputScreen from "./BirthInputScreen";
 import GenderInputScreen from "./GenderInputScreen";
 import UniversityInputScreen from "./UniversityInputScreen";
 import CertificationScreen from "./CertificationScreen";
-import firebase from '@react-native-firebase/storage'
+import MatchScreen from "./MatchScreen";
+
+
 const Stack = createStackNavigator();
 
 export default function App() {
-  const SCREEN_NUM = 6
+  const SCREEN_NUM = 6;
+  const [userInfo, setUserInfo] = useState({
+    userId: null,
+    userPhoneNumber: null,
+    userName: null,
+    userBirth: null,
+    userGender: null,
+    userUniversity: null,
+    userCertification: false,
+  });
+
   return (
     <NavigationContainer style={styles.nav}>
       <Stack.Navigator
@@ -31,18 +43,88 @@ export default function App() {
       >
         <Stack.Screen name="Start" component={StartScreen} />
 
-        <Stack.Screen name={`PhoneNumberInputScreen`} children={({navigation})=><PhoneNumberInputScreen navigation={navigation} progress={1/SCREEN_NUM}/>}/>
+        <Stack.Screen
+          name={`PhoneNumberInputScreen`}
+          children={({ navigation }) => (
+            <PhoneNumberInputScreen
+              navigation={navigation}
+              progress={1 / SCREEN_NUM}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+            />
+          )}
+        />
 
-        <Stack.Screen name={`NameInputScreen`} children={({navigation})=><NameInputScreen navigation={navigation} progress={2/SCREEN_NUM}/>}/>
+        <Stack.Screen
+          name={`NameInputScreen`}
+          children={({ navigation }) => (
+            <NameInputScreen
+              navigation={navigation}
+              progress={2 / SCREEN_NUM}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+            />
+          )}
+        />
 
-        <Stack.Screen name={`BirthInputScreen`} children={({navigation})=><BirthInputScreen navigation={navigation} progress={3/SCREEN_NUM}/>}/>
+        <Stack.Screen
+          name={`BirthInputScreen`}
+          children={({ navigation }) => (
+            <BirthInputScreen
+              navigation={navigation}
+              progress={3 / SCREEN_NUM}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+            />
+          )}
+        />
 
-        <Stack.Screen name={`GenderInputScreen`} children={({navigation})=><GenderInputScreen navigation={navigation} progress={4/SCREEN_NUM}/>}/>
+        <Stack.Screen
+          name={`GenderInputScreen`}
+          children={({ navigation }) => (
+            <GenderInputScreen
+              navigation={navigation}
+              progress={4 / SCREEN_NUM}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+            />
+          )}
+        />
 
-        <Stack.Screen name={`UniversityInputScreen`} children={({navigation})=><UniversityInputScreen navigation={navigation} progress={5/SCREEN_NUM}/>}/>
+        <Stack.Screen
+          name={`UniversityInputScreen`}
+          children={({ navigation }) => (
+            <UniversityInputScreen
+              navigation={navigation}
+              progress={5 / SCREEN_NUM}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+            />
+          )}
+        />
 
-        <Stack.Screen name={`CertificationScreen`} children={({navigation})=><CertificationScreen navigation={navigation} progress={6/SCREEN_NUM}/>}/>
+        <Stack.Screen
+          name={`CertificationScreen`}
+          children={({ navigation }) => (
+            <CertificationScreen
+              navigation={navigation}
+              progress={6 / SCREEN_NUM}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+            />
+          )}
+        />
 
+        <Stack.Screen
+          name={`MatchScreen`}
+          children={({ navigation }) => (
+            <MatchScreen
+              navigation={navigation}
+              userInfo={userInfo}
+              setUserInfo={MatchScreen}
+            />
+          )}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

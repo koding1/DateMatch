@@ -13,7 +13,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { borderColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
-function GenderInputScreen({ navigation, progress }) {
+function GenderInputScreen({ navigation, progress, userInfo, setUserInfo }) {
   const previousScreen = "BirthInputScreen";
   const nextScreen = "UniversityInputScreen";
 
@@ -32,6 +32,13 @@ function GenderInputScreen({ navigation, progress }) {
     setManFocused(!manFocused);
   }
   const progressString = (progress*100).toString() + "%";
+
+  const moveNextScreen = (manFocused, womanFocused) => {
+    const tmp = {...userInfo};
+    tmp.userGender = manFocused ? 'man': 'woman'
+    setUserInfo(tmp);
+    navigation.navigate(nextScreen);
+  }
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>
@@ -75,7 +82,7 @@ function GenderInputScreen({ navigation, progress }) {
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-                (manFocused || womanFocused) ? navigation.navigate(nextScreen) : console.log("성별이 선택되지 않았습니다.")
+                (manFocused || womanFocused) ? moveNextScreen(manFocused, womanFocused) : console.log("성별이 선택되지 않았습니다.")
             }}
           >
             <LinearGradient

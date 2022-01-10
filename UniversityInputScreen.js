@@ -12,8 +12,29 @@ import { theme } from "./colors";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue, set } from 'firebase/database';
 
-function UniversityInputScreen({ navigation, progress }) {
+const firebaseConfig = {
+  apiKey: "AIzaSyDw3B0zxnz2C3JDu_Igt7wCiD-Y2-_Z6vI",
+  authDomain: "dating-4cd4b.firebaseapp.com",
+  databaseURL: "https://dating-4cd4b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "dating-4cd4b",
+  storageBucket: "dating-4cd4b.appspot.com",
+  messagingSenderId: "800176545426",
+  appId: "1:800176545426:web:e71c63f9b1650f237ed04b",
+  measurementId: "G-5DDWL8E9YQ",
+};
+const app = initializeApp(firebaseConfig);
+
+function uploadUserData(userId, userData) {
+  const db = getDatabase();
+  const reference = ref(db, 'users/' + userId);
+  set(reference, userData);
+}
+
+function UniversityInputScreen({ navigation, progress, userInfo, setUserInfo }) {
+
   const previousScreen = 'GenderInputScreen'
   const nextScreen = 'CertificationScreen'
 
@@ -23,6 +44,17 @@ function UniversityInputScreen({ navigation, progress }) {
   const onChangeNameText = (payload) => setName(payload);
 
   const progressString = (progress*100).toString() + "%";
+
+  const uploadDataAndNextScreen = (name) => {
+    const tmp = {...userInfo};
+    tmp.userUniversity = name;
+    setUserInfo(tmp);
+
+    console.log("데이터 업로드 :", tmp);
+    uploadUserData('haegu', userInfo);
+
+    navigation.navigate(nextScreen);
+  }
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>
@@ -82,7 +114,7 @@ function UniversityInputScreen({ navigation, progress }) {
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-              name ? navigation.navigate(nextScreen) : console.log("빈칸");
+              name ? uploadDataAndNextScreen(name) : console.log("빈칸");
             }}
           >
             <LinearGradient

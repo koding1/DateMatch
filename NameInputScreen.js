@@ -13,7 +13,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function NameInputScreen({ navigation, progress }) {
+function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
   const previousScreen = 'PhoneNumberInputScreen'
   const nextScreen = 'BirthInputScreen'
 
@@ -23,6 +23,13 @@ function NameInputScreen({ navigation, progress }) {
   const onChangeNameText = (payload) => setName(payload);
 
   const progressString = (progress*100).toString() + "%";
+  
+  const moveNextScreen = (name) => {
+    const tmp = {...userInfo};
+    tmp.userName = name;
+    setUserInfo(tmp);
+    navigation.navigate(nextScreen);
+  }
 
   return (
     <SafeAreaView style={styles.main}>
@@ -83,7 +90,7 @@ function NameInputScreen({ navigation, progress }) {
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-              name ? navigation.navigate(nextScreen) : console.log("빈칸");
+              name ? moveNextScreen(name) : console.log("빈칸");
             }}
           >
             <LinearGradient

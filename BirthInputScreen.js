@@ -13,7 +13,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function BirthInputScreen({ navigation, progress }) {
+function BirthInputScreen({ navigation, progress, userInfo, setUserInfo }) {
   const previousScreen = 'NameInputScreen'
   const nextScreen = 'GenderInputScreen'
 
@@ -44,6 +44,12 @@ function BirthInputScreen({ navigation, progress }) {
 
   const progressString = (progress*100).toString() + "%";
 
+  const moveNextScreen = (yy,mm,dd) => {
+    const tmp = {...userInfo};
+    tmp.userBirth = {yy:yy, mm:mm, dd:dd};
+    setUserInfo(tmp);
+    navigation.navigate(nextScreen);
+  }
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>
@@ -113,7 +119,7 @@ function BirthInputScreen({ navigation, progress }) {
             onPress={() => {
                 if (yy && mm && dd) {
                     if (yy.length==4 && mm.length==2 && dd.length==2){
-                      navigation.navigate(nextScreen);
+                      moveNextScreen(yy,mm,dd);
                     }
                     else{
                       console.log("입력 모자람");

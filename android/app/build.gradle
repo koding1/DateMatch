@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services' // firebase 추가
 import com.android.build.OutputFile
 
 /**
@@ -186,11 +185,10 @@ android {
 
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:29.0.3') // firebase 추가
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation 'com.google.firebase:firebase-analytics' // firebase 추가
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

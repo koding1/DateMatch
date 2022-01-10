@@ -13,7 +13,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import {LinearGradient} from 'expo-linear-gradient';
 
-function PhoneNumberInputScreen({ navigation, progress }) {
+function PhoneNumberInputScreen({ navigation, progress, userInfo, setUserInfo }) {
   const previousScreen = 'Start'
   const nextScreen = 'NameInputScreen'
   const [countryCallingCode, setCountryCallingCode] = useState("KR +82");
@@ -25,6 +25,15 @@ function PhoneNumberInputScreen({ navigation, progress }) {
   const onChangePhoneNumber = (payload) => setPhoneNumber(payload);
 
   const progressString = (progress*100).toString() + "%";
+
+  const moveNextScreen = (phoneNumber) => {
+    const tmp = {...userInfo};
+    tmp.userPhoneNumber = phoneNumber;
+    setUserInfo(tmp);
+    console.log(userInfo);
+    navigation.navigate(nextScreen);
+  }
+
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar>
@@ -84,7 +93,7 @@ function PhoneNumberInputScreen({ navigation, progress }) {
             style={styles.nextButton}
             onPress={() => {
               phoneNumber ?
-              navigation.navigate(nextScreen) :
+              moveNextScreen(phoneNumber) :
               console.log("빈칸")
             }}
           >

@@ -51,7 +51,7 @@ function UniversityInputScreen({ navigation, progress, userInfo, setUserInfo }) 
     setUserInfo(tmp);
 
     console.log("데이터 업로드 :", tmp);
-    uploadUserData('haegu', userInfo);
+    uploadUserData('haegu', userInfo); 
 
     navigation.navigate(nextScreen);
   }

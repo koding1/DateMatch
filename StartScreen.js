@@ -15,7 +15,7 @@ function StartScreen({ navigation }) {
   const nextScreen = 'PhoneNumberInputScreen'
 
   const initUserData = () => {
-    const id = "haegu"; // 후에 로그인 된 아이디로 대체해야함
+    const id = "1"; // 후에 로그인 된 아이디로 대체해야함
 
     const dbRef = ref(getDatabase());
     get(child(dbRef, `users/${id}`))

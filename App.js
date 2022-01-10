@@ -12,6 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import StartScreen from "./StartScreen";
+import IdInputScreen from "./IdInputScreen";
 import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
 import NameInputScreen from "./NameInputScreen";
 import BirthInputScreen from "./BirthInputScreen";
@@ -42,6 +43,17 @@ export default function App() {
         initialRouteName="Start"
       >
         <Stack.Screen name="Start" component={StartScreen} />
+
+        <Stack.Screen
+          name={`IdInputScreen`}
+          children={({ navigation }) => (
+            <IdInputScreen
+              navigation={navigation}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+            />
+          )}
+        />
 
         <Stack.Screen
           name={`PhoneNumberInputScreen`}

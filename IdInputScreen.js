@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import { theme } from "./colors";
 import { AntDesign } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
   const previousScreen = 'Start'

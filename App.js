@@ -2,10 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
   StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ImageBackground,
 } from "react-native";
 import { theme } from "./colors";
 import { NavigationContainer } from "@react-navigation/native";
@@ -25,7 +21,7 @@ import MatchScreen from "./MatchScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
-  const SCREEN_NUM = 6;
+  const SCREEN_NUM = 7;
   const [userInfo, setUserInfo] = useState({
     userId: null,
     userPhoneNumber: null,
@@ -49,6 +45,7 @@ export default function App() {
           children={({ navigation }) => (
             <IdInputScreen
               navigation={navigation}
+              progress={1 / SCREEN_NUM}
               userInfo={userInfo}
               setUserInfo={setUserInfo}
             />
@@ -60,7 +57,7 @@ export default function App() {
           children={({ navigation }) => (
             <PhoneNumberInputScreen
               navigation={navigation}
-              progress={1 / SCREEN_NUM}
+              progress={2 / SCREEN_NUM}
               userInfo={userInfo}
               setUserInfo={setUserInfo}
             />
@@ -72,7 +69,7 @@ export default function App() {
           children={({ navigation }) => (
             <NameInputScreen
               navigation={navigation}
-              progress={2 / SCREEN_NUM}
+              progress={3 / SCREEN_NUM}
               userInfo={userInfo}
               setUserInfo={setUserInfo}
             />
@@ -84,7 +81,7 @@ export default function App() {
           children={({ navigation }) => (
             <BirthInputScreen
               navigation={navigation}
-              progress={3 / SCREEN_NUM}
+              progress={4 / SCREEN_NUM}
               userInfo={userInfo}
               setUserInfo={setUserInfo}
             />
@@ -96,7 +93,7 @@ export default function App() {
           children={({ navigation }) => (
             <GenderInputScreen
               navigation={navigation}
-              progress={4 / SCREEN_NUM}
+              progress={5 / SCREEN_NUM}
               userInfo={userInfo}
               setUserInfo={setUserInfo}
             />
@@ -108,7 +105,7 @@ export default function App() {
           children={({ navigation }) => (
             <UniversityInputScreen
               navigation={navigation}
-              progress={5 / SCREEN_NUM}
+              progress={6 / SCREEN_NUM}
               userInfo={userInfo}
               setUserInfo={setUserInfo}
             />
@@ -120,7 +117,7 @@ export default function App() {
           children={({ navigation }) => (
             <CertificationScreen
               navigation={navigation}
-              progress={6 / SCREEN_NUM}
+              progress={7 / SCREEN_NUM}
               userInfo={userInfo}
               setUserInfo={setUserInfo}
             />

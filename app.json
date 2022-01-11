@@ -3,9 +3,11 @@
     "name": "dating",
     "slug": "dating",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   },
-  "name": "dating"
+  "name": "dating",
+  "android": {
+    "package": "com.dating",
+    "googleServicesFile": "./android/app/google-services.json"
+  }
 }

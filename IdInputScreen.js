@@ -11,25 +11,40 @@ import {
 import { theme } from "./colors";
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { authentication } from "./firebase-config";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 
-function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
-  const previousScreen = 'Start'
-  const nextScreen = 'PhoneNumberInputScreen'
+
+function IdInputScreen({ navigation, progress, userInfo, setUserInfo }) {
+  
+  const previousScreen = "Start";
+  const nextScreen = "PhoneNumberInputScreen";
 
   const [id, setId] = useState("");
   const [idFocused, setIdFocused] = useState(false);
-
+  const [password, setPassword] = useState("");
+  const [passwordFocused, setPasswordFocused] = useState(false);
   const onChangeIdText = (payload) => setId(payload);
+  const onChangePasswordText = (payload) => setPassword(payload);
 
-  const progressString = (progress*100).toString() + "%";
-  
-  const moveNextScreen = (id) => {
-    const tmp = {...userInfo};
+  const progressString = (progress * 100).toString() + "%";
+
+  const [isSignedIn, setIsSignedIn] = useState(true);
+
+  const moveNextScreen = (id, password) => {
+    // createUserWithEmailAndPassword(authentication, id, password)
+    // .then((re) => {
+    //   console.log(re);
+    //   setIsSignedIn(true);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // })
+    const tmp = { ...userInfo };
     tmp.userId = id;
     setUserInfo(tmp);
     navigation.navigate(nextScreen);
-  }
+  };
 
   return (
     <SafeAreaView style={styles.main}>
@@ -37,7 +52,7 @@ function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
 
       <View style={styles.header}>
         <View style={styles.progressComponent}>
-          <View style={{...styles.progress, width: progressString}}></View>
+          <View style={{ ...styles.progress, width: progressString }}></View>
         </View>
 
         <TouchableOpacity
@@ -50,47 +65,59 @@ function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
         </TouchableOpacity>
       </View>
 
-      <View style={{flex:0.9}}>
+      <View style={{ flex: 0.9 }}>
         <View style={styles.nameView}>
           <Text style={styles.nameViewText}>아이디:</Text>
         </View>
 
-        <View style={{alignItems: "center", flex:0.5 }}>
+        <View style={{ alignItems: "center", flex: 0.5 }}>
           <View style={styles.nameInputView}>
             <TextInput
-              placeholder="로그인에 사용 할 아이디"
+              placeholder="이메일"
               value={id}
               onBlur={() => setIdFocused(false)}
               onFocus={() => setIdFocused(true)}
               onChangeText={onChangeIdText}
-
               style={
                 id
                   ? {
                       ...styles.nameInput,
-                      borderColor: idFocused
-                        ? theme.progressColor
-                        : "black",
+                      borderColor: idFocused ? theme.progressColor : "black",
                     }
                   : {
                       ...styles.placeholderStyle,
-                      borderColor: idFocused
-                        ? theme.progressColor
-                        : "black",
+                      borderColor: idFocused ? theme.progressColor : "black",
                     }
               }
             />
-
+             <TextInput
+              placeholder="비밀번호"
+              value={password}
+              onBlur={() => setPasswordFocused(false)}
+              onFocus={() => setPasswordFocused(true)}
+              onChangeText={onChangePasswordText}
+              style={
+                id
+                  ? {
+                      ...styles.nameInput,
+                      borderColor: passwordFocused ? theme.progressColor : "black",
+                    }
+                  : {
+                      ...styles.placeholderStyle,
+                      borderColor: passwordFocused ? theme.progressColor : "black",
+                    }
+              }
+            />
           </View>
           <Text style={styles.subText}>
             로그인에 사용 할 아이디로, 닉네임과 다릅니다.
           </Text>
         </View>
-        <View style={{flex:0.3,justifyContent: "flex-end",}}>
+        <View style={{ flex: 0.3, justifyContent: "flex-end" }}>
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-              id ? moveNextScreen(id) : console.log("빈칸");
+              id && password ? moveNextScreen(id, password) : console.log("빈칸");
             }}
           >
             <LinearGradient
@@ -102,6 +129,7 @@ function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
               <Text style={styles.nextButtonText}>계속</Text>
             </LinearGradient>
           </TouchableOpacity>
+
         </View>
       </View>
     </SafeAreaView>
@@ -121,7 +149,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.progressColor,
   },
   header: {
-    flex:0.1,
+    flex: 0.1,
   },
   backBtn: {
     marginVertical: 10,
@@ -181,4 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NameInputScreen;
+export default IdInputScreen;

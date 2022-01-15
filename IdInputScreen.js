@@ -10,58 +10,49 @@ import {
 } from "react-native";
 import { theme } from "./colors";
 import { AntDesign } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, set } from 'firebase/database';
+import { authentication } from "./firebase-config";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDw3B0zxnz2C3JDu_Igt7wCiD-Y2-_Z6vI",
-  authDomain: "dating-4cd4b.firebaseapp.com",
-  databaseURL: "https://dating-4cd4b-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "dating-4cd4b",
-  storageBucket: "dating-4cd4b.appspot.com",
-  messagingSenderId: "800176545426",
-  appId: "1:800176545426:web:e71c63f9b1650f237ed04b",
-  measurementId: "G-5DDWL8E9YQ",
-};
-const app = initializeApp(firebaseConfig);
 
-function uploadUserData(userId, userData) {
-  const db = getDatabase();
-  const reference = ref(db, 'users/' + userId);
-  set(reference, userData);
-}
+function IdInputScreen({ navigation, progress, userInfo, setUserInfo }) {
+  
+  const previousScreen = "Start";
+  const nextScreen = "PhoneNumberInputScreen";
 
-function UniversityInputScreen({ navigation, progress, userInfo, setUserInfo }) {
+  const [id, setId] = useState("");
+  const [idFocused, setIdFocused] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const onChangeIdText = (payload) => setId(payload);
+  const onChangePasswordText = (payload) => setPassword(payload);
 
-  const previousScreen = 'GenderInputScreen'
-  const nextScreen = 'CertificationScreen'
+  const progressString = (progress * 100).toString() + "%";
 
-  const [name, setName] = useState("");
-  const [nameFocused, setNameFocused] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(true);
 
-  const onChangeNameText = (payload) => setName(payload);
-
-  const progressString = (progress*100).toString() + "%";
-
-  const uploadDataAndNextScreen = (name) => {
-    const tmp = {...userInfo};
-    tmp.userUniversity = name;
+  const moveNextScreen = (id, password) => {
+    // createUserWithEmailAndPassword(authentication, id, password)
+    // .then((re) => {
+    //   console.log(re);
+    //   setIsSignedIn(true);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // })
+    const tmp = { ...userInfo };
+    tmp.userId = id;
     setUserInfo(tmp);
-
-    console.log("데이터 업로드 :", tmp);
-    uploadUserData('new', userInfo); 
-
     navigation.navigate(nextScreen);
-  }
+  };
+
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>
 
       <View style={styles.header}>
         <View style={styles.progressComponent}>
-          <View style={{...styles.progress, width: progressString}}></View>
+          <View style={{ ...styles.progress, width: progressString }}></View>
         </View>
 
         <TouchableOpacity
@@ -74,47 +65,59 @@ function UniversityInputScreen({ navigation, progress, userInfo, setUserInfo }) 
         </TouchableOpacity>
       </View>
 
-      <View style={{flex:0.9}}>
+      <View style={{ flex: 0.9 }}>
         <View style={styles.nameView}>
-          <Text style={styles.nameViewText}>내 학교:</Text>
+          <Text style={styles.nameViewText}>아이디:</Text>
         </View>
 
-        <View style={{alignItems: "center", flex:0.5 }}>
+        <View style={{ alignItems: "center", flex: 0.5 }}>
           <View style={styles.nameInputView}>
             <TextInput
-              placeholder="학교 이름을 입력해주세요"
-              value={name}
-              onBlur={() => setNameFocused(false)}
-              onFocus={() => setNameFocused(true)}
-              onChangeText={onChangeNameText}
-
+              placeholder="이메일"
+              value={id}
+              onBlur={() => setIdFocused(false)}
+              onFocus={() => setIdFocused(true)}
+              onChangeText={onChangeIdText}
               style={
-                name
+                id
                   ? {
                       ...styles.nameInput,
-                      borderColor: nameFocused
-                        ? theme.progressColor
-                        : "black",
+                      borderColor: idFocused ? theme.progressColor : "black",
                     }
                   : {
                       ...styles.placeholderStyle,
-                      borderColor: nameFocused
-                        ? theme.progressColor
-                        : "black",
+                      borderColor: idFocused ? theme.progressColor : "black",
                     }
               }
             />
-
+             <TextInput
+              placeholder="비밀번호"
+              value={password}
+              onBlur={() => setPasswordFocused(false)}
+              onFocus={() => setPasswordFocused(true)}
+              onChangeText={onChangePasswordText}
+              style={
+                id
+                  ? {
+                      ...styles.nameInput,
+                      borderColor: passwordFocused ? theme.progressColor : "black",
+                    }
+                  : {
+                      ...styles.placeholderStyle,
+                      borderColor: passwordFocused ? theme.progressColor : "black",
+                    }
+              }
+            />
           </View>
           <Text style={styles.subText}>
-            ~~ 프로필에 표시되는 이름으로, 이후 변경할 수 없습니다.
+            로그인에 사용 할 아이디로, 닉네임과 다릅니다.
           </Text>
         </View>
-        <View style={{flex:0.3,justifyContent: "flex-end",}}>
+        <View style={{ flex: 0.3, justifyContent: "flex-end" }}>
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-              name ? uploadDataAndNextScreen(name) : console.log("빈칸");
+              id && password ? moveNextScreen(id, password) : console.log("빈칸");
             }}
           >
             <LinearGradient
@@ -126,6 +129,7 @@ function UniversityInputScreen({ navigation, progress, userInfo, setUserInfo }) 
               <Text style={styles.nextButtonText}>계속</Text>
             </LinearGradient>
           </TouchableOpacity>
+
         </View>
       </View>
     </SafeAreaView>
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.progressColor,
   },
   header: {
-    flex:0.1,
+    flex: 0.1,
   },
   backBtn: {
     marginVertical: 10,
@@ -181,7 +185,7 @@ const styles = StyleSheet.create({
   },
 
   subText: {
-    width: "83%",
+    width: "80%",
     color: theme.subTextColor,
     fontSize: 13,
   },
@@ -205,4 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UniversityInputScreen;
+export default IdInputScreen;

@@ -15,7 +15,7 @@ function StartScreen({ navigation }) {
   const nextScreen = 'IdInputScreen'
 
   const initUserData = () => {
-    const id = "111"; // 후에 로그인 된 아이디로 대체해야함
+    const id = "haegu"; // 후에 로그인 된 아이디로 대체해야함
 
     const dbRef = ref(getDatabase());
     get(child(dbRef, `users/${id}`))

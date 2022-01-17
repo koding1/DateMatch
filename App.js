@@ -16,6 +16,7 @@ import GenderInputScreen from "./GenderInputScreen";
 import UniversityInputScreen from "./UniversityInputScreen";
 import CertificationScreen from "./CertificationScreen";
 import MatchScreen from "./MatchScreen";
+import MainScreen from "./MainScreen";
 
 
 const Stack = createStackNavigator();

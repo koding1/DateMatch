@@ -23,7 +23,7 @@ function StartScreen({ navigation }) {
         if (snapshot.exists()) {
           console.log(snapshot.val().userCertification);
           snapshot.val().userCertification
-            ? navigation.navigate("MatchScreen")
+            ? navigation.navigate("MainScreen")
             : navigation.navigate("CertificationScreen")
         } else {
           console.log("No data available !!!");

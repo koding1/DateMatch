@@ -20,6 +20,11 @@ function MainScreen() {
       <TouchableOpacity>
         <ImageBackground source="./image/bg.jpg" resizeMode="cover" style={styles.image}/>
       </TouchableOpacity>
+      <TouchableOpacity onpress={() => {
+            navigation.navigate(MatchScreen);
+          }}>
+        <Text>MatchScreen</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

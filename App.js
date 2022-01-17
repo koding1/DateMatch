@@ -18,7 +18,6 @@ import CertificationScreen from "./CertificationScreen";
 import MatchScreen from "./MatchScreen";
 import MainScreen from "./MainScreen";
 
-
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -132,6 +131,17 @@ export default function App() {
               navigation={navigation}
               userInfo={userInfo}
               setUserInfo={MatchScreen}
+            />
+          )}
+        />
+
+        <Stack.Screen
+          name={`MainScreen`}
+          children={({ navigation }) => (
+            <MatchScreen
+              navigation={navigation}
+              userInfo={userInfo}
+              setUserInfo={MainScreen}
             />
           )}
         />

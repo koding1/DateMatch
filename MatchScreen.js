@@ -25,7 +25,6 @@ import {
   ScrollView,
 } from "react-native";
 import { Fontisto } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "./colors";
 
 function MatchScreen() {
@@ -36,8 +35,14 @@ function MatchScreen() {
         <View style={styles.toDo} >
           <TouchableOpacity>
             <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
             <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
             <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
             <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
           </TouchableOpacity>
         </View>

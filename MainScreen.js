@@ -33,7 +33,7 @@ function MainScreen() {
             navigation.navigate(MatchScreen);
           }}
         >
-          <Text>MatchScreen</Text>
+          <Text style={styles.btn}>MatchScreen</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -80,6 +80,9 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: "center"
+  },
+  btn:{
+    backgroundColor:"white",
   },
 });
 

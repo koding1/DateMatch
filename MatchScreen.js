@@ -23,6 +23,7 @@ import {
   TextInput,
   Alert,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { Fontisto } from "@expo/vector-icons";
 import { theme } from "./colors";
@@ -31,22 +32,35 @@ function MatchScreen() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <ScrollView>
-        <View style={styles.toDo} >
-          <TouchableOpacity>
-            <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      <SafeAreaView>
+        <ScrollView>
+          <View>
+            <TouchableOpacity style={styles.toDo}>
+              <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity style={styles.toDo}>
+              <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity style={styles.toDo}>
+              <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity style={styles.toDo}>
+              <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity style={styles.toDo}>
+              <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 }
@@ -74,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   toDo: {
-    backgroundColor: theme.toDoBg,
+    backgroundColor: "red",
     marginBottom: 10,
     paddingVertical: 20,
     paddingHorizontal: 20,

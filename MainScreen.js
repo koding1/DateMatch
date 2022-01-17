@@ -9,6 +9,7 @@ import {
   Alert,
   ScrollView,
   ImageBackground,
+  SafeAreaView,
 } from "react-native";
 import { Fontisto } from "@expo/vector-icons";
 import { theme } from "./colors";
@@ -17,14 +18,24 @@ function MainScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      <TouchableOpacity>
-        <ImageBackground source="./image/bg.jpg" resizeMode="cover" style={styles.image}/>
-      </TouchableOpacity>
-      <TouchableOpacity onpress={() => {
+      <View>
+        <TouchableOpacity>
+          <ImageBackground
+            source="./image/bg.jpg"
+            resizeMode="cover"
+            style={styles.image}
+          />
+        </TouchableOpacity>
+      </View>
+      <View>
+        <TouchableOpacity
+          onpress={() => {
             navigation.navigate(MatchScreen);
-          }}>
-        <Text>MatchScreen</Text>
-      </TouchableOpacity>
+          }}
+        >
+          <Text>MatchScreen</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }

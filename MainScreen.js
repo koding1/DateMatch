@@ -19,13 +19,13 @@ function MainScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <View>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <ImageBackground
             source="./image/bg.jpg"
             resizeMode="cover"
             style={styles.image}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View>
         <TouchableOpacity
@@ -76,6 +76,10 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "600",
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center"
   },
 });
 

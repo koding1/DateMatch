@@ -136,15 +136,16 @@ export default function App() {
         />
 
         <Stack.Screen
-          name={`MainScreen`}
+          name={'MainScreen'}
           children={({ navigation }) => (
-            <MatchScreen
+            <MainScreen
               navigation={navigation}
               userInfo={userInfo}
               setUserInfo={MainScreen}
             />
           )}
         />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

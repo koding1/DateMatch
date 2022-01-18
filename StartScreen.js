@@ -9,29 +9,38 @@ import {
 import { theme } from "./colors";
 import {LinearGradient} from 'expo-linear-gradient';
 import { getDatabase, ref, child, get } from "firebase/database";
+import * as SecureStore from 'expo-secure-store';
 
 function StartScreen({ navigation }) {
   const previousScreen = null
-  const nextScreen = 'IdInputScreen'
+  const nextScreen = 'GoogleLoginScreen'
 
-  const initUserData = () => {
-    const id = "haegu"; // 후에 로그인 된 아이디로 대체해야함
-
-    const dbRef = ref(getDatabase());
-    get(child(dbRef, `users/${id}`))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          console.log(snapshot.val().userCertification);
-          snapshot.val().userCertification
-            ? navigation.navigate("MainScreen")
-            : navigation.navigate("CertificationScreen")
-        } else {
-          console.log("No data available !!!");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const initUserData = async () => {
+    // const id = "haegu1"; // 후에 로그인 된 아이디로 대체해야함
+    const id = await SecureStore.getItemAsync("id");
+    const privateKey = await SecureStore.getItemAsync("privateKey");
+    console.log(id, privateKey);
+    if (id && privateKey) {
+      const dbRef = ref(getDatabase());
+      get(child(dbRef, `users/${id}`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            if (snapshot.val().userPrivateKey === privateKey && !snapshot.val().TESTING) {
+              alert("🔐 로그인 성공 !!🔐");
+              snapshot.val().userCertification
+              ? navigation.navigate("MainScreen")
+              : navigation.navigate("CertificationScreen")
+            } else {
+              console.log("자동 로그인 실패");
+            }
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
     }
     useEffect(() => initUserData(), []); // 초기 실행
   return (
@@ -53,7 +62,7 @@ function StartScreen({ navigation }) {
             colors={["#ee9ca7", "#ffdde1"]}
             style={styles.gradient}
           >
-            <Text style={styles.startButtonText}>시작하기</Text>
+            <Text style={styles.startButtonText}>가입하기</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

@@ -8,7 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import StartScreen from "./StartScreen";
-import IdInputScreen from "./IdInputScreen";
+import GoogleLoginScreen from "./GoogleLoginScreen";
 import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
 import NameInputScreen from "./NameInputScreen";
 import BirthInputScreen from "./BirthInputScreen";
@@ -30,6 +30,8 @@ export default function App() {
     userGender: null,
     userUniversity: null,
     userCertification: false,
+    userEmail: null,
+    userPrivateKey: null,
   });
 
   return (
@@ -41,9 +43,9 @@ export default function App() {
         <Stack.Screen name="Start" component={StartScreen} />
 
         <Stack.Screen
-          name={`IdInputScreen`}
+          name={`GoogleLoginScreen`}
           children={({ navigation }) => (
-            <IdInputScreen
+            <GoogleLoginScreen
               navigation={navigation}
               progress={1 / SCREEN_NUM}
               userInfo={userInfo}
@@ -51,7 +53,6 @@ export default function App() {
             />
           )}
         />
-
         <Stack.Screen
           name={`PhoneNumberInputScreen`}
           children={({ navigation }) => (
@@ -130,22 +131,21 @@ export default function App() {
             <MatchScreen
               navigation={navigation}
               userInfo={userInfo}
-              setUserInfo={MatchScreen}
+              setUserInfo={setUserInfo}
             />
           )}
         />
 
         <Stack.Screen
-          name={'MainScreen'}
+          name={"MainScreen"}
           children={({ navigation }) => (
             <MainScreen
               navigation={navigation}
               userInfo={userInfo}
-              setUserInfo={MainScreen}
+              setUserInfo={setUserInfo}
             />
           )}
         />
-
       </Stack.Navigator>
     </NavigationContainer>
   );

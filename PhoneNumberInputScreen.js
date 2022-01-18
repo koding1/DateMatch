@@ -14,7 +14,7 @@ import { Feather } from "@expo/vector-icons";
 import {LinearGradient} from 'expo-linear-gradient';
 
 function PhoneNumberInputScreen({ navigation, progress, userInfo, setUserInfo }) {
-  const previousScreen = 'Start'
+  const previousScreen = 'GoogleLoginScreen'
   const nextScreen = 'NameInputScreen'
   const [countryCallingCode, setCountryCallingCode] = useState("KR +82");
   const [countryCallingCodeFocus, setCountryCallingCodeFocus] = useState(false);

@@ -19,17 +19,17 @@ function StartScreen({ navigation }) {
     // const id = "haegu1"; // 후에 로그인 된 아이디로 대체해야함
     const id = await SecureStore.getItemAsync("id");
     const privateKey = await SecureStore.getItemAsync("privateKey");
-    console.log(id, privateKey);
+    // console.log(id, privateKey);
     if (id && privateKey) {
       const dbRef = ref(getDatabase());
       get(child(dbRef, `users/${id}`))
         .then((snapshot) => {
           if (snapshot.exists()) {
-            if (snapshot.val().userPrivateKey === privateKey && !snapshot.val().TESTING) {
+            if (snapshot.val().userPrivateKey === privateKey) { // 테스트를 위해 Main이나 Certification으로 가고 싶지 않은 경우 이 부분을 false로 만드시면 됩니다
               alert("🔐 로그인 성공 !!🔐");
-              snapshot.val().userCertification
-              ? navigation.navigate("MainScreen")
-              : navigation.navigate("CertificationScreen")
+              snapshot.val().userCertification 
+              ? navigation.navigate("MainScreen") // 인증된 회원이라면
+              : navigation.navigate("CertificationScreen") // 인증되지 않은 회원이라면
             } else {
               console.log("자동 로그인 실패");
             }

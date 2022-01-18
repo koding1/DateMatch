@@ -36,12 +36,6 @@ function GoogleLoginScreen({ navigation, progress, userInfo, setUserInfo }) {
 
     userInfoResponse.json().then((data) => { // userInfoResponse를 json형식으로 변환
       moveNextScreen(data.id, data.email, userKey);
-      // set(ref(db, "users/" + data.id), { // users경로에 google id를 key로 생성
-      //   userPrivateKey: userKey, // 암호화된 key (자동 로그인 시 비밀번호로 사용)
-      //   userEmail : data.email, // 이메일 주소
-      // });
-      // saveLocal("id", data.id); // Local에 저장 하여 자동 로그인시 id로 사용
-      // saveLocal("private_key", user_key); // Local에 저장 하여 자동 로그인시 password로 사용
     });
   };
 
@@ -52,7 +46,7 @@ function GoogleLoginScreen({ navigation, progress, userInfo, setUserInfo }) {
     get(child(dbRef, 'private_key')).then((snapshot) => {
       if (snapshot.exists()) {
         const user_key = encrypt(a, snapshot.val()); // 현재시간 + 서버키 조합으로 암호화
-        getUserGoogleDataAndSetFirebase(result.accessToken, user_key); // user data를 구글에서 가져오기 + firebase 삽입 
+        getUserGoogleDataAndSetFirebase(result.accessToken, user_key); // user data를 구글에서 가져오기
       } else {
         console.log("No data available");
       }

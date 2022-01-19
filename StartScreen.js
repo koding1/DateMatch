@@ -42,6 +42,11 @@ function StartScreen({ navigation }) {
           console.error(error);
         });
     }
+    else {
+      console.log("디버깅 용:")
+      console.log("id :",id);
+      console.log("privateKey :",privateKey);
+    }
   };
     useEffect(() => initUserData(), []); // 초기 실행
   return (

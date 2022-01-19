@@ -19,7 +19,6 @@ import { theme } from "./colors";
 const { width:SCREEN_WIDTH } = Dimensions.get("window");
 
 function MainScreen( {navigation} ) {
-  console.log(navigation.navigate);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />

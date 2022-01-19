@@ -56,7 +56,7 @@ function UniversityInputScreen({ navigation, progress, userInfo, setUserInfo }) 
     setUserInfo(tmp);
     // console.log("데이터 업로드 :", tmp);
     uploadUserData(userInfo.userId, userInfo);
-    saveLocal("id", userInfo.UserId); // Local에 저장 하여 자동 로그인시 id로 사용
+    saveLocal("id", userInfo.userId); // Local에 저장 하여 자동 로그인시 id로 사용
     saveLocal("privateKey", userInfo.userPrivateKey); // Local에 저장 하여 자동 로그인시 password로 사용
     navigation.navigate(nextScreen);
   };

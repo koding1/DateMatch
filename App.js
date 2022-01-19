@@ -2,30 +2,20 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
   StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ImageBackground,
 } from "react-native";
 import { theme } from "./colors";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import StartScreen from "./StartScreen";
-import IdInputScreen from "./IdInputScreen";
-import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
-import NameInputScreen from "./NameInputScreen";
-import BirthInputScreen from "./BirthInputScreen";
-import GenderInputScreen from "./GenderInputScreen";
-import UniversityInputScreen from "./UniversityInputScreen";
-import CertificationScreen from "./CertificationScreen";
+import UserSignUpComponent from "./UserSignUpComponent";
 import MatchScreen from "./MatchScreen";
-
+import MainScreen from "./MainScreen";
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const SCREEN_NUM = 6;
+  const SCREEN_NUM = 7;
   const [userInfo, setUserInfo] = useState({
     userId: null,
     userPhoneNumber: null,
@@ -34,6 +24,8 @@ export default function App() {
     userGender: null,
     userUniversity: null,
     userCertification: false,
+    userEmail: null,
+    userPrivateKey: null,
   });
 
   return (
@@ -45,82 +37,9 @@ export default function App() {
         <Stack.Screen name="Start" component={StartScreen} />
 
         <Stack.Screen
-          name={`IdInputScreen`}
+          name={`UserSignUpComponent`} // 회원 가입 절차 다 모여있는 곳
           children={({ navigation }) => (
-            <IdInputScreen
-              navigation={navigation}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`PhoneNumberInputScreen`}
-          children={({ navigation }) => (
-            <PhoneNumberInputScreen
-              navigation={navigation}
-              progress={1 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`NameInputScreen`}
-          children={({ navigation }) => (
-            <NameInputScreen
-              navigation={navigation}
-              progress={2 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`BirthInputScreen`}
-          children={({ navigation }) => (
-            <BirthInputScreen
-              navigation={navigation}
-              progress={3 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`GenderInputScreen`}
-          children={({ navigation }) => (
-            <GenderInputScreen
-              navigation={navigation}
-              progress={4 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`UniversityInputScreen`}
-          children={({ navigation }) => (
-            <UniversityInputScreen
-              navigation={navigation}
-              progress={5 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`CertificationScreen`}
-          children={({ navigation }) => (
-            <CertificationScreen
-              navigation={navigation}
-              progress={6 / SCREEN_NUM}
+            <UserSignUpComponent
               userInfo={userInfo}
               setUserInfo={setUserInfo}
             />
@@ -133,7 +52,18 @@ export default function App() {
             <MatchScreen
               navigation={navigation}
               userInfo={userInfo}
-              setUserInfo={MatchScreen}
+              setUserInfo={setUserInfo}
+            />
+          )}
+        />
+
+        <Stack.Screen
+          name={"MainScreen"}
+          children={({ navigation }) => (
+            <MainScreen
+              navigation={navigation}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
             />
           )}
         />

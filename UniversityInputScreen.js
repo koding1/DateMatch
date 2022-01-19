@@ -14,6 +14,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, set } from 'firebase/database';
+import * as SecureStore from 'expo-secure-store';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDw3B0zxnz2C3JDu_Igt7wCiD-Y2-_Z6vI",
@@ -45,16 +46,20 @@ function UniversityInputScreen({ navigation, progress, userInfo, setUserInfo }) 
 
   const progressString = (progress*100).toString() + "%";
 
+  async function saveLocal(key, value) { // Local에 데이터 저장
+    await SecureStore.setItemAsync(key, value);
+  }
+
   const uploadDataAndNextScreen = (name) => {
-    const tmp = {...userInfo};
+    const tmp = { ...userInfo };
     tmp.userUniversity = name;
     setUserInfo(tmp);
-
-    console.log("데이터 업로드 :", tmp);
-    uploadUserData('haegu', userInfo); 
-
+    // console.log("데이터 업로드 :", tmp);
+    uploadUserData(userInfo.userId, userInfo);
+    saveLocal("id", userInfo.userId); // Local에 저장 하여 자동 로그인시 id로 사용
+    saveLocal("privateKey", userInfo.userPrivateKey); // Local에 저장 하여 자동 로그인시 password로 사용
     navigation.navigate(nextScreen);
-  }
+  };
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>

@@ -9,13 +9,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import StartScreen from "./StartScreen";
 import UserSignUpComponent from "./UserSignUpComponent";
-import GoogleLoginScreen from "./GoogleLoginScreen";
-import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
-import NameInputScreen from "./NameInputScreen";
-import BirthInputScreen from "./BirthInputScreen";
-import GenderInputScreen from "./GenderInputScreen";
-import UniversityInputScreen from "./UniversityInputScreen";
-import CertificationScreen from "./CertificationScreen";
 import MatchScreen from "./MatchScreen";
 import MainScreen from "./MainScreen";
 

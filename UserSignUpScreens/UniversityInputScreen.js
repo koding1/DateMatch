@@ -8,14 +8,24 @@ import {
   TextInput,
   SafeAreaView,
 } from "react-native";
-import { theme } from "./colors";
+import { theme } from "../colors";
 import { AntDesign } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 
-function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
-  const previousScreen = 'PhoneNumberInputScreen'
-  const nextScreen = 'BirthInputScreen'
+import { LinearGradient } from "expo-linear-gradient";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set } from 'firebase/database';
+import * as SecureStore from 'expo-secure-store';
+import { db } from '../firebase-config'
+
+function uploadUserData(userId, userData) {
+  const reference = ref(db, 'users/' + userId);
+  set(reference, userData);
+}
+
+function UniversityInputScreen({ navigation, progress, userInfo, setUserInfo }) {
+
+  const previousScreen = 'GenderInputScreen'
+  const nextScreen = 'CertificationScreen'
 
   const [name, setName] = useState("");
   const [nameFocused, setNameFocused] = useState(false);
@@ -23,14 +33,21 @@ function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
   const onChangeNameText = (payload) => setName(payload);
 
   const progressString = (progress*100).toString() + "%";
-  
-  const moveNextScreen = (name) => {
-    const tmp = {...userInfo};
-    tmp.userName = name;
-    setUserInfo(tmp);
-    navigation.navigate(nextScreen);
+
+  async function saveLocal(key, value) { // Local에 데이터 저장
+    await SecureStore.setItemAsync(key, value);
   }
 
+  const uploadDataAndNextScreen = (name) => {
+    const tmp = { ...userInfo };
+    tmp.userUniversity = name;
+    setUserInfo(tmp);
+    // console.log("데이터 업로드 :", tmp);
+    uploadUserData(userInfo.userId, userInfo);
+    saveLocal("id", userInfo.userId); // Local에 저장 하여 자동 로그인시 id로 사용
+    saveLocal("privateKey", userInfo.userPrivateKey); // Local에 저장 하여 자동 로그인시 password로 사용
+    navigation.navigate(nextScreen);
+  };
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar></StatusBar>
@@ -52,13 +69,13 @@ function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
 
       <View style={{flex:0.9}}>
         <View style={styles.nameView}>
-          <Text style={styles.nameViewText}>내 이름:</Text>
+          <Text style={styles.nameViewText}>내 학교:</Text>
         </View>
 
         <View style={{alignItems: "center", flex:0.5 }}>
           <View style={styles.nameInputView}>
             <TextInput
-              placeholder="이름을 입력해주세요."
+              placeholder="학교 이름을 입력해주세요"
               value={name}
               onBlur={() => setNameFocused(false)}
               onFocus={() => setNameFocused(true)}
@@ -90,7 +107,7 @@ function NameInputScreen({ navigation, progress, userInfo, setUserInfo }) {
           <TouchableOpacity
             style={styles.nextButton}
             onPress={() => {
-              name ? moveNextScreen(name) : console.log("빈칸");
+              name ? uploadDataAndNextScreen(name) : console.log("빈칸");
             }}
           >
             <LinearGradient
@@ -181,4 +198,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NameInputScreen;
+export default UniversityInputScreen;

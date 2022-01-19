@@ -1,19 +1,17 @@
-import { StatusBar } from "expo-status-bar";
+
 import React, { useState } from "react";
 import {
   StyleSheet,
 } from "react-native";
-import { theme } from "./colors";
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import GoogleLoginScreen from "./GoogleLoginScreen";
-import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
-import NameInputScreen from "./NameInputScreen";
-import BirthInputScreen from "./BirthInputScreen";
-import GenderInputScreen from "./GenderInputScreen";
-import UniversityInputScreen from "./UniversityInputScreen";
-import CertificationScreen from "./CertificationScreen";
+import GoogleLoginScreen from "./UserSignUpScreens/GoogleLoginScreen";
+import PhoneNumberInputScreen from "./UserSignUpScreens/PhoneNumberInputScreen";
+import NameInputScreen from "./UserSignUpScreens/NameInputScreen";
+import BirthInputScreen from "./UserSignUpScreens/BirthInputScreen";
+import GenderInputScreen from "./UserSignUpScreens/GenderInputScreen";
+import UniversityInputScreen from "./UserSignUpScreens/UniversityInputScreen";
+import CertificationScreen from "./UserSignUpScreens/CertificationScreen";
 
 
 const UserSignUp = createStackNavigator();

@@ -7,11 +7,9 @@ import {
   StatusBar,
   SafeAreaView,
 } from "react-native";
-import { theme } from "./colors";
+import { theme } from "../colors";
 import { AntDesign } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { borderColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 function GenderInputScreen({ navigation, progress, userInfo, setUserInfo }) {
   const previousScreen = "BirthInputScreen";

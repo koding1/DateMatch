@@ -5,17 +5,15 @@ import {
   View,
   TouchableOpacity,
   StatusBar,
-  TextInput,
   SafeAreaView,
 } from "react-native";
-import { theme } from "./colors";
+import { theme } from "../colors";
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { androidClientId, iosClientId, db } from "./firebase-config";
 import * as Google from "expo-google-app-auth";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import { encrypt, decrypt } from "./myCrypto"
-import * as SecureStore from 'expo-secure-store';
 
 function GoogleLoginScreen({ navigation, progress, userInfo, setUserInfo }) {
   

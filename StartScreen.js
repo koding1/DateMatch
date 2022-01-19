@@ -15,12 +15,11 @@ function StartScreen({ navigation }) {
   const nextScreen = "UserSignUpComponent";
 
   const initUserData = async () => {
-    // const id = "haegu1"; // 후에 로그인 된 아이디로 대체해야함
     const id = await SecureStore.getItemAsync("id");
     const privateKey = await SecureStore.getItemAsync("privateKey");
     // console.log(id, privateKey);
-    if (false) {                // 1. 자동 로그인 중지 상태 (개발자용)
-    // if (id && privateKey) {  // 2. 자동 로그인 (1, 2 중 하나로 고르기)
+    // if (false) {                // 1. 자동 로그인 중지 상태 (개발자용)
+    if (id && privateKey) {  // 2. 자동 로그인 (1, 2 중 하나로 고르기)
       const dbRef = ref(getDatabase());
       get(child(dbRef, `users/${id}`))
         .then((snapshot) => {

@@ -6,6 +6,7 @@ import {
 import { theme } from "./colors";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import 'react-native-gesture-handler';
 
 import StartScreen from "./StartScreen";
 import UserSignUpComponent from "./UserSignUpComponent";

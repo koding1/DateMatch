@@ -8,31 +8,37 @@ import {
   TextInput,
   Alert,
   ScrollView,
-  ImageBackground,
+  Image,
   SafeAreaView,
+  Button,
+  Dimensions,
 } from "react-native";
 import { Fontisto } from "@expo/vector-icons";
 import { theme } from "./colors";
 
-function MainScreen() {
+const { width:SCREEN_WIDTH } = Dimensions.get("window");
+
+function MainScreen( navigation ) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      <View>
-        {/* <TouchableOpacity>
-          <ImageBackground
-            source="./image/bg.jpg"
-            resizeMode="cover"
-            style={styles.image}
-          />
-        </TouchableOpacity> */}
+      <View style={styles.imgContainer}>
+        <Image
+          source={require("./image/certificationCapture.png")}
+          style={styles.image}
+        />
       </View>
-      <View>
-        <TouchableOpacity
-          onpress={() => {
-            navigation.navigate(MatchScreen);
+      <View style={styles.btnContainer}>
+        <Button
+          title="MatchScreen"
+          onPress={() => {
+            navigation.navigate("MatchScreen");
           }}
-        >
+        />
+        <TouchableOpacity onPress={() => {
+            alert("🔐 로그인 성공 !!🔐");
+            // navigation.navigate("MatchScreen");
+          }}>
           <Text style={styles.btn}>MatchScreen</Text>
         </TouchableOpacity>
       </View>
@@ -42,25 +48,9 @@ function MainScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.bg,
-    paddingHorizontal: 20,
-  },
-  header: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    marginTop: 100,
-  },
-  btnText: {
-    fontSize: 38,
-    fontWeight: "600",
-  },
-  input: {
-    backgroundColor: "white",
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    borderRadius: 30,
-    marginVertical: 20,
-    fontSize: 18,
+    paddingTop: 20,
+    justifyContent: "center",
+    marginHorizontal: 16,
   },
   toDo: {
     backgroundColor: theme.toDoBg,
@@ -72,17 +62,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  toDoText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
+  imgContainer: {
+    flex: 1,
+    justifyContent: "center",
   },
   image: {
     flex: 1,
-    justifyContent: "center"
+    resizeMode:"center",
+    width: SCREEN_WIDTH,
+    height: "40%",
   },
-  btn:{
-    backgroundColor:"white",
+  btnContainer: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  btn: {
+    backgroundColor: "white",
+    fontSize: 40,
+    fontWeight: "500",
   },
 });
 

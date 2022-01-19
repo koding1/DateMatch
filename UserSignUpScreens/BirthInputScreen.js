@@ -8,9 +8,8 @@ import {
   TextInput,
   SafeAreaView,
 } from "react-native";
-import { theme } from "./colors";
+import { theme } from "../colors";
 import { AntDesign } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 function BirthInputScreen({ navigation, progress, userInfo, setUserInfo }) {

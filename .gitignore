@@ -57,3 +57,6 @@ dist/
 # firebase
 android/app/google-services.json
 android/app/google-services-web.json
+
+# 현진 추가
+firebase-config.js

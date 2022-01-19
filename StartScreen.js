@@ -19,7 +19,7 @@ function StartScreen({ navigation }) {
     // const id = "haegu1"; // 후에 로그인 된 아이디로 대체해야함
     const id = await SecureStore.getItemAsync("id");
     const privateKey = await SecureStore.getItemAsync("privateKey");
-    // console.log(id, privateKey);
+    console.log(id, privateKey);
     if (id && privateKey) {
       const dbRef = ref(getDatabase());
       get(child(dbRef, `users/${id}`))

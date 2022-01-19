@@ -25,11 +25,12 @@ function StartScreen({ navigation }) {
       get(child(dbRef, `users/${id}`))
         .then((snapshot) => {
           if (snapshot.exists()) {
-            if (snapshot.val().userPrivateKey === privateKey) { // 테스트를 위해 Main이나 Certification으로 가고 싶지 않은 경우 이 부분을 false로 만드시면 됩니다
+            if (snapshot.val().userPrivateKey === privateKey) {
+              // 테스트를 위해 Main이나 Certification으로 가고 싶지 않은 경우 이 부분을 false로 만드시면 됩니다
               alert("🔐 로그인 성공 !!🔐");
-              snapshot.val().userCertification 
-              ? navigation.navigate("MainScreen") // 인증된 회원이라면
-              : navigation.navigate("CertificationScreen") // 인증되지 않은 회원이라면
+              snapshot.val().userCertification
+                ? navigation.navigate("MainScreen") // 인증된 회원이라면
+                : navigation.navigate("CertificationScreen"); // 인증되지 않은 회원이라면
             } else {
               console.log("자동 로그인 실패");
             }
@@ -41,7 +42,7 @@ function StartScreen({ navigation }) {
           console.error(error);
         });
     }
-    }
+  };
     useEffect(() => initUserData(), []); // 초기 실행
   return (
     <ImageBackground

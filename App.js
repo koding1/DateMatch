@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import StartScreen from "./StartScreen";
+import UserSignUpComponent from "./UserSignUpComponent";
 import GoogleLoginScreen from "./GoogleLoginScreen";
 import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
 import NameInputScreen from "./NameInputScreen";
@@ -43,82 +44,9 @@ export default function App() {
         <Stack.Screen name="Start" component={StartScreen} />
 
         <Stack.Screen
-          name={`GoogleLoginScreen`}
+          name={`UserSignUpComponent`} // 회원 가입 절차 다 모여있는 곳
           children={({ navigation }) => (
-            <GoogleLoginScreen
-              navigation={navigation}
-              progress={1 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-        <Stack.Screen
-          name={`PhoneNumberInputScreen`}
-          children={({ navigation }) => (
-            <PhoneNumberInputScreen
-              navigation={navigation}
-              progress={2 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`NameInputScreen`}
-          children={({ navigation }) => (
-            <NameInputScreen
-              navigation={navigation}
-              progress={3 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`BirthInputScreen`}
-          children={({ navigation }) => (
-            <BirthInputScreen
-              navigation={navigation}
-              progress={4 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`GenderInputScreen`}
-          children={({ navigation }) => (
-            <GenderInputScreen
-              navigation={navigation}
-              progress={5 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`UniversityInputScreen`}
-          children={({ navigation }) => (
-            <UniversityInputScreen
-              navigation={navigation}
-              progress={6 / SCREEN_NUM}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <Stack.Screen
-          name={`CertificationScreen`}
-          children={({ navigation }) => (
-            <CertificationScreen
-              navigation={navigation}
-              progress={7 / SCREEN_NUM}
+            <UserSignUpComponent
               userInfo={userInfo}
               setUserInfo={setUserInfo}
             />

@@ -7,7 +7,6 @@ import { theme } from "./colors";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import StartScreen from "./StartScreen";
 import GoogleLoginScreen from "./GoogleLoginScreen";
 import PhoneNumberInputScreen from "./PhoneNumberInputScreen";
 import NameInputScreen from "./NameInputScreen";
@@ -15,27 +14,14 @@ import BirthInputScreen from "./BirthInputScreen";
 import GenderInputScreen from "./GenderInputScreen";
 import UniversityInputScreen from "./UniversityInputScreen";
 import CertificationScreen from "./CertificationScreen";
-import MatchScreen from "./MatchScreen";
-import MainScreen from "./MainScreen";
+
 
 const UserSignUp = createStackNavigator();
 
-export function UserSignUp() {
+function UserSignUpComponent({userInfo, setUserInfo}) {
   const SCREEN_NUM = 7;
-  const [userInfo, setUserInfo] = useState({
-    userId: null,
-    userPhoneNumber: null,
-    userName: null,
-    userBirth: null,
-    userGender: null,
-    userUniversity: null,
-    userCertification: false,
-    userEmail: null,
-    userPrivateKey: null,
-  });
 
   return (
-    <NavigationContainer style={styles.nav}>
       <UserSignUp.Navigator
         screenOptions={{ ...horizontalAnimation, headerShown: false }}
         initialRouteName="GoogleLoginScreen"
@@ -52,6 +38,7 @@ export function UserSignUp() {
             />
           )}
         />
+        
         <UserSignUp.Screen
           name={`PhoneNumberInputScreen`}
           children={({ navigation }) => (
@@ -123,29 +110,36 @@ export function UserSignUp() {
             />
           )}
         />
-
-        <UserSignUp.Screen
-          name={`MatchScreen`}
-          children={({ navigation }) => (
-            <MatchScreen
-              navigation={navigation}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
-
-        <UserSignUp.Screen
-          name={"MainScreen"}
-          children={({ navigation }) => (
-            <MainScreen
-              navigation={navigation}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )}
-        />
       </UserSignUp.Navigator>
-    </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+    navComtainer: {
+      flex: 1,
+      backgroundColor: "#fff",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  });
+  
+  // https://itnext.io/change-react-native-screen-animation-direction-with-react-navigation-8cec0f66f22
+  const horizontalAnimation = {
+    gestureDirection: "horizontal",
+    cardStyleInterpolator: ({ current, layouts }) => {
+      return {
+        cardStyle: {
+          transform: [
+            {
+              translateX: current.progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [layouts.screen.width, 0],
+              }),
+            },
+          ],
+        },
+      };
+    }, 
+  };
+
+  export default UserSignUpComponent;

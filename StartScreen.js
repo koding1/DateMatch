@@ -7,13 +7,13 @@ import {
   ImageBackground,
 } from "react-native";
 import { theme } from "./colors";
-import {LinearGradient} from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
 import { getDatabase, ref, child, get } from "firebase/database";
-import * as SecureStore from 'expo-secure-store';
+import * as SecureStore from "expo-secure-store";
 
 function StartScreen({ navigation }) {
-  const previousScreen = null
-  const nextScreen = 'GoogleLoginScreen'
+  const previousScreen = null;
+  const nextScreen = "UserSignUpComponent";
 
   const initUserData = async () => {
     // const id = "haegu1"; // 후에 로그인 된 아이디로 대체해야함
@@ -41,14 +41,18 @@ function StartScreen({ navigation }) {
         .catch((error) => {
           console.error(error);
         });
-    }
-    else {
-      console.log("디버깅 용:")
-      console.log("id :",id);
-      console.log("privateKey :",privateKey);
+    } else if (id === null && privateKey === null) {
+      // id privateKey 가 아예 없는 경우 === 아직 해당 디바이스에서 가입 기록이 없음
+      console.log("StartScreen : 가입 기록이 없는 Device");
+    } else {
+      console.log("디버깅 용:");
+      console.log("id :", id);
+      console.log("privateKey :", privateKey);
     }
   };
-    useEffect(() => initUserData(), []); // 초기 실행
+  
+  useEffect(() => initUserData(), []); // 초기 실행
+
   return (
     <ImageBackground
       source={require("./image/bg.jpg")}
@@ -96,7 +100,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     fontSize: 20,
     color: "white",
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

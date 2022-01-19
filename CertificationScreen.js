@@ -14,7 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 function CertificationScreen({ navigation, progress }) {
   const previousScreen = 'UniversityInputScreen'
-  const nextScreen = 'CertificationScreen'
+  const nextScreen = 'Start'
 
   const [confirmed, setConfirmed] = useState(true); // 서버에서 받아와야함
 

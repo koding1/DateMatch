@@ -10,7 +10,7 @@ import {
 import { theme } from "../colors";
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { androidClientId, iosClientId, db } from "./firebase-config";
+import { androidClientId, iosClientId, db } from "..firebase-config";
 import * as Google from "expo-google-app-auth";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import { encrypt, decrypt } from "./myCrypto"

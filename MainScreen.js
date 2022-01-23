@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 
 function MainScreen({ navigation }) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.test}>
       <View>
         <Text>top</Text>
       </View>
@@ -29,4 +29,11 @@ function MainScreen({ navigation }) {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  test : {
+    flex: 1,
+  },
+});
+
 export default MainScreen;

@@ -14,20 +14,12 @@ function MainScreen({ navigation }) {
     <SafeAreaView style={styles.test}>
       
       <StatusBar style="auto" />
-
-      <View>
-        <Text>top</Text>
-      </View>
       <Tab.Navigator>
-        <Tab.Screen name="홈" component={StackNavigator} />
+        <Tab.Screen name="홈" options={{headerShown: false}} component={StackNavigator} />
         <Tab.Screen name="신규" component={NewUserScreen} />
         <Tab.Screen name="과팅 & 미팅" component={BlindDateScreen} />
       </Tab.Navigator>
-      <View>
-        <Text>bottom</Text>
-      </View>
 
-      
     </SafeAreaView>
   );
 }

@@ -10,7 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { getDatabase, ref, child, get } from "firebase/database";
 import * as SecureStore from "expo-secure-store";
 
-function StartScreen({ navigation }) {
+function StartScreen({ navigation, userInfo, setUserInfo }) {
   const previousScreen = null;
   const nextScreen = "UserSignUpComponent";
 
@@ -27,9 +27,23 @@ function StartScreen({ navigation }) {
             if (snapshot.val().userPrivateKey === privateKey) {
               // 테스트를 위해 Main이나 Certification으로 가고 싶지 않은 경우 이 부분을 false로 만드시면 됩니다
               alert("🔐 로그인 성공 !!🔐");
-              snapshot.val().userCertification
-                ? navigation.navigate("MainScreen") // 인증된 회원이라면
-                : navigation.navigate("CertificationScreen"); // 인증되지 않은 회원이라면
+              if (snapshot.val().userCertification) { // 인증된 회원이라면
+                const tmp = { ...userInfo };
+                tmp.userId = snapshot.val().userId;
+                tmp.userPhoneNumber = snapshot.val().userPhoneNumber;
+                tmp.userName = snapshot.val().userName;
+                tmp.userBirth = snapshot.val().userBirth;
+                tmp.userGender = snapshot.val().userGender;
+                tmp.userUniversity = snapshot.val().userUniversity;
+                tmp.userCertification = snapshot.val().userCertification;
+                tmp.userEmail = snapshot.val().userEmail;
+                tmp.userPrivateKey = snapshot.val().userPrivateKey;
+                setUserInfo(tmp);
+                navigation.navigate("MainScreen");
+              }
+              else {
+                navigation.navigate("CertificationScreen");// 인증되지 않은 회원이라면
+              } 
             } else {
               console.log("자동 로그인 실패");
             }

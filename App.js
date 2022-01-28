@@ -33,8 +33,18 @@ export default function App() {
         screenOptions={{ ...horizontalAnimation, headerShown: false }}
         initialRouteName="Start"
       >
-        <Stack.Screen name="Start" component={StartScreen} />
 
+        <Stack.Screen
+          name={`Start`} // 회원 가입 절차 다 모여있는 곳
+          children={({ navigation }) => (
+            <StartScreen
+              navigation={navigation}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+            />
+          )}
+        />
+        
         <Stack.Screen
           name={`UserSignUpComponent`} // 회원 가입 절차 다 모여있는 곳
           children={({ navigation }) => (

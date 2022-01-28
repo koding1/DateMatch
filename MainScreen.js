@@ -11,31 +11,8 @@ import { getDatabase, ref, child, get } from "firebase/database";
 
 const Tab = createBottomTabNavigator();
 
-async function MainScreen({ navigation }) {
-  const id = await SecureStore.getItemAsync("id");
-  console.log(userInfo)
-  console.log(id)
-  const dbRef = ref(getDatabase());
-  get(child(dbRef, `users/${id}`))
-    .then((snapshot) => {
-      setUserInfo(() => ({
-        userId: id,
-        userPhoneNumber: snapshot.val().userPhoneNumber,
-        userName: snapshot.val().userName,
-        userBirth: snapshot.val().userBirth,
-        userGender: snapshot.val().userGender,
-        userUniversity: snapshot.val().userUniversity,
-        userCertification: snapshot.val().userCertification,
-        userEmail: snapshot.val().userEmail,
-        userPrivateKey: snapshot.val().userPrivateKey,
-      }));
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-  console.log(userInfo)
-
+function MainScreen({ navigation, userInfo}) {
+  console.log("MainScreen 에서 읽은 Data :", userInfo); // 220128 장현진 디버깅 용 추가 - 다음 푸시 때 지우셔도 됩니다
   return (
     <SafeAreaView style={styles.test}>
       <StatusBar style="auto" />

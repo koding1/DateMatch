@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, Image} from "react-native";
+import { StyleSheet, Text, View, Button, Image } from "react-native";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -7,6 +7,8 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import HomeScreen from "./HomeScreen";
+import * as SecureStore from "expo-secure-store";
+import { getDatabase, ref, child, get } from "firebase/database";
 
 function MyInfoScreen({ navigation }) {
   return (
@@ -40,10 +42,26 @@ function AllianceScreen({ navigation }) {
   );
 }
 
+// render function에 async를 쓰면 오류가 나서 then을 쓰기도 뭐하고
+// 비동기 처리를 어떻게 해야할지 고민 중
 function CustomDrawerContent(props) {
+  const id = SecureStore.getItemAsync("id");
+  const dbRef = ref(getDatabase());
+
+  console.log("구분");
+
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
+      <View>
+        <Image
+          source={require("../image/bg.jpg")}
+          style={styles.profileImage}
+        />
+      </View>
+      <View>
+        <Text>송승훈</Text>
+      </View>
       <DrawerItem label="Help" onPress={() => alert("Link to help")} />
     </DrawerContentScrollView>
   );
@@ -81,6 +99,9 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
+  },
+  profileImage: {
+    resizeMode: "contain",
   },
 });
 export default DrawNavigator;

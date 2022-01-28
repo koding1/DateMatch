@@ -12,7 +12,6 @@ import { getDatabase, ref, child, get } from "firebase/database";
 const Tab = createBottomTabNavigator();
 
 function MainScreen({ navigation, userInfo}) {
-  console.log("MainScreen 에서 읽은 Data :", userInfo); // 220128 장현진 디버깅 용 추가 - 다음 푸시 때 지우셔도 됩니다
   return (
     <SafeAreaView style={styles.test}>
       <StatusBar style="auto" />

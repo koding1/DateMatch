@@ -12,7 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 function CertificationScreen({ navigation, progress }) {
-  const previousScreen = 'UniversityInputScreen'
+  const previousScreen = 'Start'
   const nextScreen = 'Start'
 
   const [confirmed, setConfirmed] = useState(true); // 서버에서 받아와야함

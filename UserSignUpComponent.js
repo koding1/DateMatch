@@ -16,13 +16,14 @@ import CertificationScreen from "./UserSignUpScreens/CertificationScreen";
 
 const UserSignUp = createStackNavigator();
 
-function UserSignUpComponent({userInfo, setUserInfo}) {
+function UserSignUpComponent({ userInfo, setUserInfo, userSignInBefore }) {
   const SCREEN_NUM = 7;
 
   return (
       <UserSignUp.Navigator
         screenOptions={{ ...horizontalAnimation, headerShown: false }}
-        initialRouteName="GoogleLoginScreen"
+        
+        initialRouteName = {userSignInBefore ? "CertificationScreen" : "GoogleLoginScreen"} // userSignInBefore가 true : 이전에 가입한 적 있지만 승인 상태가 false 인 상태
       >
 
         <UserSignUp.Screen

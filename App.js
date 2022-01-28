@@ -26,6 +26,7 @@ export default function App() {
     userEmail: null,
     userPrivateKey: null,
   });
+  const [userSignInBefore, SetUserSignInBefore] = useState(false); // 유저의 가입 경험이 있다면 (SecureStore)
 
   return (
     <NavigationContainer style={styles.nav}>
@@ -41,6 +42,7 @@ export default function App() {
               navigation={navigation}
               userInfo={userInfo}
               setUserInfo={setUserInfo}
+              SetUserSignInBefore={SetUserSignInBefore}
             />
           )}
         />
@@ -51,6 +53,7 @@ export default function App() {
             <UserSignUpComponent
               userInfo={userInfo}
               setUserInfo={setUserInfo}
+              userSignInBefore={userSignInBefore} // 유저 가입 경험이 있는데 MainScreen이 아닌 UserSignUpComponent로 온 경우 -> 승인 상태가 false인 경우
             />
           )}
         />

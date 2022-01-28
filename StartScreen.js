@@ -18,7 +18,7 @@ function StartScreen({ navigation, userInfo, setUserInfo, SetUserSignInBefore })
     const id = await SecureStore.getItemAsync("id");
     const privateKey = await SecureStore.getItemAsync("privateKey");
     // console.log(id, privateKey);
-    // if (false) {                // 1. 자동 로그인 중지 상태 (개발자용)
+    //if (false) {                // 1. 자동 로그인 중지 상태 (개발자용)
     if (id && privateKey) {  // 2. 자동 로그인 (1, 2 중 하나로 고르기)
       const dbRef = ref(getDatabase());
       get(child(dbRef, `users/${id}`))
@@ -59,7 +59,7 @@ function StartScreen({ navigation, userInfo, setUserInfo, SetUserSignInBefore })
       // id privateKey 가 아예 없는 경우 === 아직 해당 디바이스에서 가입 기록이 없음
       console.log("StartScreen : 가입 기록이 없는 Device");
     } else {
-      console.log("디버깅 용:");
+      console.log("자동 로그인 OFF. 디버깅 상태입니다:"); // 실제는 로그인 되는 상태입니다. UserSignUpComponent 부분 작업하려고 임의로 자동 로그인을 꺼둔 상태
       console.log("id :", id);
       console.log("privateKey :", privateKey);
     }

@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getStorage } from "firebase/storage"
 
 const firebaseConfig = {
   apiKey: "AIzaSyDw3B0zxnz2C3JDu_Igt7wCiD-Y2-_Z6vI",
@@ -17,6 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 //export const authentication = getAuth(app);
 export const db = getDatabase(app);
+export const storage = getStorage(app);
 
 export const androidClientId =
   "78075718912-jelf2t612q5qvn0pnqupkon4mrgkki2s.apps.googleusercontent.com";

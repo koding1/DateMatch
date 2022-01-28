@@ -25,6 +25,7 @@ export default function App() {
     userCertification: false,
     userEmail: null,
     userPrivateKey: null,
+    userProfilePictureUrl: null,
   });
   const [userSignInBefore, SetUserSignInBefore] = useState(false); // 유저의 가입 경험이 있다면 (SecureStore)
 

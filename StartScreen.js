@@ -44,7 +44,6 @@ function StartScreen({ navigation, userInfo, setUserInfo, SetUserSignInBefore })
               else {
                 SetUserSignInBefore(true); //유저가 가입한 경험이 있음을 의미
                 navigation.navigate(nextScreen);
-                //navigation.navigate("CertificationScreen");// 인증되지 않은 회원이라면
               } 
             } else {
               console.log("자동 로그인 실패");

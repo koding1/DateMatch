@@ -50,7 +50,7 @@ export default function App() {
         
         <Stack.Screen
           name={`UserSignUpComponent`} // 회원 가입 절차 다 모여있는 곳
-          children={({ navigation }) => (
+          children={({ }) => (
             <UserSignUpComponent
               userInfo={userInfo}
               setUserInfo={setUserInfo}

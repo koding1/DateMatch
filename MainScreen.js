@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import StackNavigator from "./MainScreens/StackNavigator";
 import NewUserScreen from "./MainScreens/Temporary";
 import { BlindDateScreen } from "./MainScreens/Temporary";
+import MatchScreen from "./MatchScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 import { getDatabase, ref, child, get } from "firebase/database";
@@ -22,7 +23,7 @@ function MainScreen({ navigation, userInfo}) {
           component={StackNavigator}
         />
         <Tab.Screen name="신규" component={NewUserScreen} />
-        <Tab.Screen name="과팅 & 미팅" component={BlindDateScreen} />
+        <Tab.Screen name="과팅 & 미팅" component={MatchScreen} />
       </Tab.Navigator>
     </SafeAreaView>
   );

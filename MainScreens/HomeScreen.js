@@ -60,13 +60,6 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.btnContainer}>
         <Button
           style={styles.btn}
-          title="MatchScreen"
-          onPress={() => {
-            navigation.navigate("MatchScreen");
-          }}
-        />
-        <Button
-          style={styles.btn}
           title="오늘의 소개팅 받기"
           onPress={() => {
             alert("오늘의 소개팅 받기");

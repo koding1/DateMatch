@@ -8,7 +8,7 @@ import NewUserScreen from "./Temporary";
 console.log("StackNavigator Check:");
 
 const Stack = createStackNavigator();
-const StackNavigator = () => {
+const StackNavigator = ({userInfo}) => {
   return (
     <Stack.Navigator screenOptions={{
       headerShown: false

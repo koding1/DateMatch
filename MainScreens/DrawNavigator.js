@@ -100,7 +100,10 @@ function CustomDrawerContent(props) {
 }
 
 const Drawer = createDrawerNavigator();
-const DrawNavigator = ({userInfo}) => {
+const DrawNavigator = ({route}) => {
+  const {userInfo,setUserInfo} = route.params;
+  console.log("Drawer:",userInfo);
+
   return (
     <Drawer.Navigator
       screenOptions={{

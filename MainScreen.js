@@ -12,7 +12,7 @@ import { getDatabase, ref, child, get } from "firebase/database";
 
 const Tab = createBottomTabNavigator();
 
-function MainScreen({ navigation, userInfo}) {
+function MainScreen({ navigation, userInfo, setUserInfo }) {
   return (
     <SafeAreaView style={styles.test}>
       <StatusBar style="auto" />
@@ -21,6 +21,7 @@ function MainScreen({ navigation, userInfo}) {
           name="홈"
           options={{ headerShown: false }}
           component={StackNavigator}
+          initialParams={{userInfo,setUserInfo}}
         />
         <Tab.Screen name="신규" component={NewUserScreen} />
         <Tab.Screen name="과팅 & 미팅" component={MatchScreen} />

@@ -1,18 +1,3 @@
-// import {
-//     Text,
-//     View,
-//   } from "react-native";
-
-// function MatchScreen({}) {
-//   return (
-//     <View>
-//       <Text> 해구 </Text>
-//     </View>
-//   );
-// }
-
-// export default MatchScreen;
-
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import {
@@ -28,6 +13,11 @@ import {
 import { Fontisto } from "@expo/vector-icons";
 import { theme } from "./colors";
 
+function uploadUserData(userId, userData) {
+  const reference = ref(db, 'users/' + userId);
+  set(reference, userData);
+}
+
 function MatchScreen() {
   return (
     <View style={styles.container}>
@@ -35,8 +25,8 @@ function MatchScreen() {
       <SafeAreaView>
         <ScrollView>
           <View>
-            <TouchableOpacity style={styles.toDo}>
-              <Text style={styles.toDoText}>세종대학교 / 24 / 2명 / 더보기 </Text>
+            <TouchableOpacity style={styles.toDo} onPress={() => uploadUserData(userInfo.userId, tmp)} >
+              <Text style={styles.toDoText}>등록하기</Text>
             </TouchableOpacity>
           </View>
           <View>

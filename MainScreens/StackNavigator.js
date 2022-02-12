@@ -5,7 +5,7 @@ import DrawNavigator from "./DrawNavigator";
 import { BlindDateScreen } from "./Temporary";
 import NewUserScreen from "./Temporary";
 
-console.log("StackNavigator Check:");
+//console.log("StackNavigator Check:");
 
 const Stack = createStackNavigator();
 const StackNavigator = ({route}) => {

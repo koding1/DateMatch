@@ -22,7 +22,6 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  console.log("HomeScreen Check:");
 
   return (
     <View style={styles.container}>

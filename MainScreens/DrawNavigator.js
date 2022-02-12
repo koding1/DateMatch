@@ -16,6 +16,8 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import { theme } from "../colors";
 import HomeScreen from "./HomeScreen";
+import { storage } from '../firebase-config'
+import { ref as storageRef, uploadBytes } from "firebase/storage";
 
 function MyInfoScreen({ navigation }) {
   return (
@@ -49,10 +51,37 @@ function AllianceScreen({ navigation }) {
   );
 }
 
-// render function에 async를 쓰면 오류가 나서 then을 쓰기도 뭐하고
-// 비동기 처리를 어떻게 해야할지 고민 중
+const uploadUserImage = async (uri, imageName, userId) => {
+  const userStorageRef = storageRef(storage, `user_profile_picture/${userId}/${imageName}`);
+  const response = await fetch(uri);
+  const bytes = await response.blob();
+  await uploadBytes(userStorageRef, bytes).then(() => {
+      console.log('업로드 성공')
+  })
+  .catch(error => {
+      console.log('업로드 실패')
+      console.error(error)
+  });
+};
+
 function CustomDrawerContent(props) {
   const [image, setImage] = useState(null);
+  const [userInfo, setUserInfo] = useState({
+    userId: null,
+    userPhoneNumber: null,
+    userName: null,
+    userBirth: null,
+    userGender: null,
+    userUniversity: null,
+    userCertification: false,
+    userEmail: null,
+    userPrivateKey: null,
+    userProfilePictureUrl: null,
+  });
+
+  useEffect(()=>{setUserInfo(props.oldUserInfo)},[])
+  console.log(props.oldUserInfo);
+  console.log(userInfo);
 
   const selectProfilePicture = async (payload) => {
     // No permissions request is necessary for launching the image library
@@ -63,14 +92,13 @@ function CustomDrawerContent(props) {
       quality: 1,
     });
 
-    //console.log(result);
-
     if (!result.cancelled) {
       setImage(result.uri);
 
       const tmp = { ...userInfo };
       tmp.userProfilePictureUrl = result.uri;
       setUserInfo(tmp);
+      uploadUserImage(tmp.userProfilePictureUrl, "profile.jpg", tmp.userId);
     }
   };
 
@@ -92,7 +120,9 @@ function CustomDrawerContent(props) {
         </TouchableOpacity>
       </View>
       <View>
-        <Text>송승훈</Text>
+        {/* <Text>{userInfo.userName}</Text>
+        <Text>{userInfo.userBirth.yy}</Text>
+        <Text>{userInfo.userUniversity}</Text> */}
       </View>
       <DrawerItem label="Help" onPress={() => alert("Link to help")} />
     </DrawerContentScrollView>
@@ -102,7 +132,6 @@ function CustomDrawerContent(props) {
 const Drawer = createDrawerNavigator();
 const DrawNavigator = ({route}) => {
   const {userInfo,setUserInfo} = route.params;
-  console.log("Drawer:",userInfo);
 
   return (
     <Drawer.Navigator
@@ -119,7 +148,7 @@ const DrawNavigator = ({route}) => {
         ),
       }}
       initialRouteName="Home"
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerContent={(props) => <CustomDrawerContent {...props} oldUserInfo={userInfo} />}
     >
       <Drawer.Screen name="홈" component={HomeScreen} />
       <Drawer.Screen name="내 정보" component={MyInfoScreen} />

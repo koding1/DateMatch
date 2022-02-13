@@ -13,11 +13,12 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { theme } from "../colors";
 import HomeScreen from "./HomeScreen";
-import { storage } from '../firebase-config'
-import { ref as storageRef, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase-config";
+import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
+import LoadableImage from "./LoadableImage";
 
 function MyInfoScreen({ navigation }) {
   return (
@@ -52,19 +53,48 @@ function AllianceScreen({ navigation }) {
 }
 
 const uploadUserImage = async (uri, imageName, userId) => {
-  const userStorageRef = storageRef(storage, `user_profile_picture/${userId}/${imageName}`);
+  const userStorageRef = storageRef(
+    storage,
+    `user_profile_picture/${userId}/${imageName}`
+  );
   const response = await fetch(uri);
   const bytes = await response.blob();
-  await uploadBytes(userStorageRef, bytes).then(() => {
-      console.log('업로드 성공')
-  })
-  .catch(error => {
-      console.log('업로드 실패')
-      console.error(error)
-  });
+  await uploadBytes(userStorageRef, bytes)
+    .then(() => {
+      console.log("업로드 성공");
+    })
+    .catch((error) => {
+      console.log("업로드 실패");
+      console.error(error);
+    });
+};
+
+const downloadUserImage = async (userId) => {
+  const userStorageRef = storageRef(
+    storage,
+    `user_profile_picture/${userId}/profile.jpg`
+  );
+  const url = await getDownloadURL(userStorageRef);
+
+  console.log(url)
+
+  return url;
 };
 
 function CustomDrawerContent(props) {
+    // const [loaded, setLoaded] = useState(false);
+  // const preLoad = async () => {
+  //   try{
+  //     await Font.loadAsync({
+  //       ...Ionicons.font
+  //     });
+  //     await Asset.loadAsync({uri: image});
+  //     setLoaded(true);
+  //   }catch(e){
+  //     console.log(e);
+  //   }
+  // };
+
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState({
     userId: null,
@@ -79,9 +109,9 @@ function CustomDrawerContent(props) {
     userProfilePictureUrl: null,
   });
 
-  useEffect(()=>{setUserInfo(props.oldUserInfo)},[])
-  console.log(props.oldUserInfo);
-  console.log(userInfo);
+  useEffect(() => {
+    setUserInfo(props.oldUserInfo);
+  }, []);
 
   const selectProfilePicture = async (payload) => {
     // No permissions request is necessary for launching the image library
@@ -93,12 +123,7 @@ function CustomDrawerContent(props) {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
-
-      const tmp = { ...userInfo };
-      tmp.userProfilePictureUrl = result.uri;
-      setUserInfo(tmp);
-      uploadUserImage(tmp.userProfilePictureUrl, "profile.jpg", tmp.userId);
+      uploadUserImage(result.uri, "ChangeRequest.jpg", props.oldUserInfo.userId);
     }
   };
 
@@ -106,11 +131,14 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
       <View>
-        {image ? (
-          <Image source={{ uri: image }} style={styles.profile} />
+        {/* <Image source={{ uri: downloadUserImage(props.oldUserInfo.userId) }} style={styles.profile} /> */}
+        {/* {image ? (
+          <Image source={{ uri: downloadUserImage(props.oldUserInfo.userId) }} style={styles.profile} />
         ) : (
           <Image source={require("../image/bg.jpg")} style={styles.profile} />
-        )}
+        )} */}
+
+        <LoadableImage url={downloadUserImage(props.oldUserInfo.userId)}/>
 
         <TouchableOpacity
           style={styles.profilePictureInputComponent}
@@ -120,9 +148,9 @@ function CustomDrawerContent(props) {
         </TouchableOpacity>
       </View>
       <View>
-        {/* <Text>{userInfo.userName}</Text>
-        <Text>{userInfo.userBirth.yy}</Text>
-        <Text>{userInfo.userUniversity}</Text> */}
+        { userInfo.userBirth ? (<Text>{userInfo.userName}</Text>) : (<Text>Loading..</Text>) }
+        { userInfo.userBirth ? (<Text>{userInfo.userBirth.yy}</Text>) : (<Text>Loading..</Text>) }
+        { userInfo.userBirth ? (<Text>{userInfo.userUniversity}</Text>) : (<Text>Loading..</Text>) }
       </View>
       <DrawerItem label="Help" onPress={() => alert("Link to help")} />
     </DrawerContentScrollView>
@@ -130,8 +158,8 @@ function CustomDrawerContent(props) {
 }
 
 const Drawer = createDrawerNavigator();
-const DrawNavigator = ({route}) => {
-  const {userInfo,setUserInfo} = route.params;
+const DrawNavigator = ({ route }) => {
+  const { userInfo} = route.params;
 
   return (
     <Drawer.Navigator
@@ -148,7 +176,9 @@ const DrawNavigator = ({route}) => {
         ),
       }}
       initialRouteName="Home"
-      drawerContent={(props) => <CustomDrawerContent {...props} oldUserInfo={userInfo} />}
+      drawerContent={(props) => (
+        <CustomDrawerContent {...props} oldUserInfo={userInfo} />
+      )}
     >
       <Drawer.Screen name="홈" component={HomeScreen} />
       <Drawer.Screen name="내 정보" component={MyInfoScreen} />

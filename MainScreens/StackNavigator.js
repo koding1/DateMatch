@@ -9,14 +9,14 @@ import NewUserScreen from "./Temporary";
 
 const Stack = createStackNavigator();
 const StackNavigator = ({route}) => {
-  const {userInfo,setUserInfo} = route.params;
+  const {userInfo} = route.params;
 
   return (
     <Stack.Navigator screenOptions={{
       headerShown: false
     }}
   >
-      <Stack.Screen name="Home" component={DrawNavigator}  initialParams={{userInfo,setUserInfo}} />
+      <Stack.Screen name="Home" component={DrawNavigator}  initialParams={{userInfo}} />
       <Stack.Screen name="BlindDateScreen" component={BlindDateScreen} />
       <Stack.Screen name="NewUserScreen" component={NewUserScreen} />
     </Stack.Navigator>

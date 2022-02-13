@@ -21,7 +21,7 @@ function MainScreen({ navigation, userInfo, setUserInfo }) {
           name="홈"
           options={{ headerShown: false }}
           component={StackNavigator}
-          initialParams={{userInfo,setUserInfo}}
+          initialParams={{userInfo}}
         />
         <Tab.Screen name="신규" component={NewUserScreen} />
         <Tab.Screen name="과팅 & 미팅" component={MatchScreen} />

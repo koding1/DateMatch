@@ -9,14 +9,14 @@ export default class LoadableImage extends Component {
   render() {
     const { url } = this.props.url
 
-    console.log(url)
+    console.log("LoadableImage's url:",url);
 
     return (
       <View>
         <Image style={styles.profile}
           onLoadEnd={this._onLoadEnd}
-          // source={{ uri: url }}
-          source={require("../image/bg.jpg")}
+          source={{ uri: url }}
+          //source={require("../image/bg.jpg")}
         />
         <ActivityIndicator
           style={styles.activityIndicator}

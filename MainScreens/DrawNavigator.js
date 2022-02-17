@@ -13,11 +13,17 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
+import AppLoading from "expo-app-loading";
+import { Asset } from "expo-asset";
 import * as ImagePicker from "expo-image-picker";
 import { theme } from "../colors";
 import HomeScreen from "./HomeScreen";
 import { storage } from "../firebase-config";
-import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref as storageRef,
+  uploadBytes,
+} from "firebase/storage";
 import LoadableImage from "./LoadableImage";
 
 function MyInfoScreen({ navigation }) {
@@ -69,32 +75,19 @@ const uploadUserImage = async (uri, imageName, userId) => {
     });
 };
 
-const downloadUserImage = async (userId) => {
+const downloadUserImage = (userId) => {
   const userStorageRef = storageRef(
     storage,
     `user_profile_picture/${userId}/profile.jpg`
   );
-  const url = await getDownloadURL(userStorageRef);
+  const url = getDownloadURL(userStorageRef);
 
-  console.log(url)
+  console.log("url:", url);
 
   return url;
 };
 
 function CustomDrawerContent(props) {
-    // const [loaded, setLoaded] = useState(false);
-  // const preLoad = async () => {
-  //   try{
-  //     await Font.loadAsync({
-  //       ...Ionicons.font
-  //     });
-  //     await Asset.loadAsync({uri: image});
-  //     setLoaded(true);
-  //   }catch(e){
-  //     console.log(e);
-  //   }
-  // };
-
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState({
     userId: null,
@@ -123,7 +116,11 @@ function CustomDrawerContent(props) {
     });
 
     if (!result.cancelled) {
-      uploadUserImage(result.uri, "ChangeRequest.jpg", props.oldUserInfo.userId);
+      uploadUserImage(
+        result.uri,
+        "ChangeRequest.jpg",
+        props.oldUserInfo.userId
+      );
     }
   };
 
@@ -138,7 +135,7 @@ function CustomDrawerContent(props) {
           <Image source={require("../image/bg.jpg")} style={styles.profile} />
         )} */}
 
-        <LoadableImage url={downloadUserImage(props.oldUserInfo.userId)}/>
+        <LoadableImage url={downloadUserImage(userInfo.userId)} />
 
         <TouchableOpacity
           style={styles.profilePictureInputComponent}
@@ -148,20 +145,67 @@ function CustomDrawerContent(props) {
         </TouchableOpacity>
       </View>
       <View>
-        { userInfo.userBirth ? (<Text>{userInfo.userName}</Text>) : (<Text>Loading..</Text>) }
-        { userInfo.userBirth ? (<Text>{userInfo.userBirth.yy}</Text>) : (<Text>Loading..</Text>) }
-        { userInfo.userBirth ? (<Text>{userInfo.userUniversity}</Text>) : (<Text>Loading..</Text>) }
+        {userInfo.userBirth ? (
+          <Text>{userInfo.userName}</Text>
+        ) : (
+          <Text>Loading..</Text>
+        )}
+        {userInfo.userBirth ? (
+          <Text>{userInfo.userBirth.yy}</Text>
+        ) : (
+          <Text>Loading..</Text>
+        )}
+        {userInfo.userBirth ? (
+          <Text>{userInfo.userUniversity}</Text>
+        ) : (
+          <Text>Loading..</Text>
+        )}
       </View>
       <DrawerItem label="Help" onPress={() => alert("Link to help")} />
     </DrawerContentScrollView>
   );
 }
 
+function cacheImages(image) {
+  if (typeof image === "string") {
+    return Image.prefetch(image);
+  } else {
+    console.log("image:",image);
+    console.log("type of image:",typeof image);
+    console.log("not string");
+    // return Asset.fromModule(image).downloadAsync();
+  }
+}
+
 const Drawer = createDrawerNavigator();
 const DrawNavigator = ({ route }) => {
-  const { userInfo} = route.params;
+  const { userInfo } = route.params;
+  const [loaded, setLoaded] = useState(false);
 
-  return (
+  const loadAssetsAsync = async () => {
+    const url = await downloadUserImage(userInfo.userId);
+    const imageAssets = await cacheImages([url]);
+    await Promise.all([...imageAssets]);
+  }
+
+  // const preLoad = async () => {
+  //   try {
+  //     console.log("cacheImages");
+  //     await cacheImages(url);
+  //     setLoaded(true);
+  //   } catch (e) {
+  //     console.log("error:", e);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   console.log("useEffect");
+  //   preLoad();
+  // }, []);
+
+  console.log("loaded:", loaded);
+
+  return loaded ? (
     <Drawer.Navigator
       screenOptions={{
         drawerStyle: {
@@ -177,7 +221,7 @@ const DrawNavigator = ({ route }) => {
       }}
       initialRouteName="Home"
       drawerContent={(props) => (
-        <CustomDrawerContent {...props} oldUserInfo={userInfo} />
+        <CustomDrawerContent {...props} oldUserInfo={userInfo}/>
       )}
     >
       <Drawer.Screen name="홈" component={HomeScreen} />
@@ -186,6 +230,10 @@ const DrawNavigator = ({ route }) => {
       <Drawer.Screen name="자주하는 질문" component={QnAScreen} />
       <Drawer.Screen name="과팅 제휴" component={AllianceScreen} />
     </Drawer.Navigator>
+  ) : (
+    <AppLoading startAsync={loadAssetsAsync}
+    onFinish={setLoaded(true)}
+    onError={console.warn} />
   );
 };
 

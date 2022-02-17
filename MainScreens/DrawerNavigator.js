@@ -88,6 +88,7 @@ const downloadUserImage = (userId) => {
 };
 
 function CustomDrawerContent(props) {
+  console.log("Custom's props.url:",props.url);
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState({
     userId: null,
@@ -135,7 +136,7 @@ function CustomDrawerContent(props) {
           <Image source={require("../image/bg.jpg")} style={styles.profile} />
         )} */}
 
-        <LoadableImage url={downloadUserImage(userInfo.userId)} />
+        <LoadableImage url={props.url} />
 
         <TouchableOpacity
           style={styles.profilePictureInputComponent}
@@ -178,35 +179,36 @@ function cacheImages(image) {
 }
 
 const Drawer = createDrawerNavigator();
-const DrawNavigator = ({ route }) => {
-  const { userInfo } = route.params;
-  const [loaded, setLoaded] = useState(false);
 
-  const loadAssetsAsync = async () => {
-    const url = await downloadUserImage(userInfo.userId);
-    const imageAssets = await cacheImages([url]);
-    await Promise.all([...imageAssets]);
+export default class DrawerNavigator extends React.Component{
+  state = {
+    isReady: false,
+    url:"",
+  };
+  
+  async _loadAssetsAsync() {
+    console.log("_loadAssetsAsync");
+    const test = this.setState({url:downloadUserImage(this.props.userInfo.userId)});
+    const imageAssets = cacheImages(this.state.url);
+    // const fontAssets = cacheFonts([FontAwesome.font]);
+
+    await Promise.all([...imageAssets,...test]);
   }
 
-  // const preLoad = async () => {
-  //   try {
-  //     console.log("cacheImages");
-  //     await cacheImages(url);
-  //     setLoaded(true);
-  //   } catch (e) {
-  //     console.log("error:", e);
-  //   }
-  // };
+  render() {
+    console.log("this.props.userInfo:",this.props.userInfo);
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._loadAssetsAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      );
+    }
 
-  // useEffect(() => {
-  //   console.log("useEffect");
-  //   preLoad();
-  // }, []);
-
-  console.log("loaded:", loaded);
-
-  return loaded ? (
-    <Drawer.Navigator
+    return (
+      <Drawer.Navigator
       screenOptions={{
         drawerStyle: {
           backgroundColor: "#c6cbef",
@@ -221,7 +223,7 @@ const DrawNavigator = ({ route }) => {
       }}
       initialRouteName="Home"
       drawerContent={(props) => (
-        <CustomDrawerContent {...props} oldUserInfo={userInfo}/>
+        <CustomDrawerContent {...props} oldUserInfo={this.props.userInfo} url={this.state.url}/>
       )}
     >
       <Drawer.Screen name="홈" component={HomeScreen} />
@@ -230,12 +232,9 @@ const DrawNavigator = ({ route }) => {
       <Drawer.Screen name="자주하는 질문" component={QnAScreen} />
       <Drawer.Screen name="과팅 제휴" component={AllianceScreen} />
     </Drawer.Navigator>
-  ) : (
-    <AppLoading startAsync={loadAssetsAsync}
-    onFinish={setLoaded(true)}
-    onError={console.warn} />
-  );
-};
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   icon: {
@@ -266,4 +265,3 @@ const styles = StyleSheet.create({
     borderRadius: 150,
   },
 });
-export default DrawNavigator;

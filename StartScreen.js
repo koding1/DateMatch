@@ -10,9 +10,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import { getDatabase, ref, child, get } from "firebase/database";
 import * as SecureStore from "expo-secure-store";
 
-function StartScreen({ navigation, userInfo, setUserInfo, SetUserSignInBefore }) {
+function StartScreen({ navigation, userInfo, setUserInfo, SetUserSignInBefore, userLoginRequest }) {
   const previousScreen = null;
   const nextScreen = "UserSignUpComponent";
+  const loginScreen = "UserLoginComponent";
 
   const initUserData = async () => {
     const id = await SecureStore.getItemAsync("id");
@@ -26,7 +27,7 @@ function StartScreen({ navigation, userInfo, setUserInfo, SetUserSignInBefore })
           if (snapshot.exists()) {
             if (snapshot.val().userPrivateKey === privateKey) {
               // 테스트를 위해 Main이나 Certification으로 가고 싶지 않은 경우 이 부분을 false로 만드시면 됩니다
-              alert("🔐 로그인 성공 !!🔐");
+              alert("🔐 로그인 성공 !!🔐 (앱 배포 시 삭제)");
               if (snapshot.val().userCertification) { // 인증된 회원이라면
                 const tmp = { ...userInfo };
                 tmp.userId = snapshot.val().userId;
@@ -43,6 +44,7 @@ function StartScreen({ navigation, userInfo, setUserInfo, SetUserSignInBefore })
               }
               else {
                 SetUserSignInBefore(true); //유저가 가입한 경험이 있음을 의미
+                alert("🔐 가입 승인 절차가 진행 중 입니다. 🔐");
                 navigation.navigate(nextScreen);
               } 
             } else {
@@ -65,7 +67,7 @@ function StartScreen({ navigation, userInfo, setUserInfo, SetUserSignInBefore })
     }
   };
   
-  useEffect(() => initUserData(), []); // 초기 실행
+  useEffect(() => initUserData(), [userLoginRequest]); // 초기 실행
 
   return (
     <ImageBackground
@@ -89,12 +91,30 @@ function StartScreen({ navigation, userInfo, setUserInfo, SetUserSignInBefore })
             <Text style={styles.startButtonText}>가입하기</Text>
           </LinearGradient>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.startButton}
+          onPress={() => {
+            navigation.navigate(loginScreen);
+          }}
+        >
+          <LinearGradient
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            colors={["#ee9ca7", "#ffdde1"]}
+            style={styles.gradient}
+          >
+            <Text style={styles.startButtonText}>로그인</Text>
+          </LinearGradient>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  main: {
+    paddingBottom: 30,
+  },
   image: {
     alignItems: "center",
     justifyContent: "flex-end",
@@ -106,7 +126,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   startButton: {
-    marginBottom: 50,
+    marginBottom: 20,
   },
   startButtonText: {
     textAlign: "center",
